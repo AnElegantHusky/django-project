@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>test</title>
+    </head>
+    <body>
+    <table border="1">
+        <form action="/qushu" method="post">
+            {% csrf_token %}
+            <P>
+                <label >查询的社区名:</label>
+                <input type="text" name ='shequ'/>
+            </P>
+            <p><input type="submit" value="提交"/></p>
+        </form>
+        <thead>
+        <tr>
+            <td>社区名</td>
+            <td>问题名称</td>
+            <td>详细描述</td>
+            <td>归类</td>
+            <td>创建时间</td>
+        </tr>
+        </thead>
+        {%for line in form%}
+            <tr>
+                <td>{{line.COMMUNITY_NAME}}</td>
+                <td>{{line.MAIN_TYPE_NAME}}</td>
+                <td>{{line.SUB_TYPE_NAME}}</td>
+                <td>{{line.EVENT_PROPERTY_NAME}}</td>
+                <td>{{line.CREATE_TIME}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    </body>
+
+</html>

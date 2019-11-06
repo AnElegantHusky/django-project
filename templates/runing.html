@@ -1,0 +1,122 @@
+<!--
+align:    对齐方式 LEFT，CENTER，RIGHT，TOP，BOTTOM (不用多说了)
+behavior:    用于设定滚动的方式，主要由三种方式：
+behavior="scroll":    表示由一端滚动到另一端；
+behavior="slide":    表示由一端快速滑动到另一端，且不再重复；
+behavior="alternate" :    默认值——表示在两端之间来回滚动。
+direction:    left(默认值) 左; right 右;up 上;down 下;
+bgcolor:    背景颜色
+height:    高度
+weight:    宽度
+Hspace/vspace:    分别用于设定滚动字幕的左右边框和上下边框的宽度。作用大概和css中的margin差不多
+scrollamount:    用于设定每个连续滚动文本后面的间隔，该间隔用像素表示，以上是官方说法,其实就是滚动的速度，值不能太大,要不从视觉角度来说,是没反应的.值越大速度越快，反之越慢。
+scrolldelay:    延迟时间
+loop:    这个属性大家也很熟悉，循环次数；loop=-1的时候一直重复循环（默认值）
+
+-->
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>jQuery NiceScroll Test Page</title>
+
+<style type="text/css">
+
+li{
+list-style-type:square;} //定义前面的小方块
+
+
+</style>
+
+	<script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/jquery.nicescroll.min.js"></script>
+
+<script>
+	
+  $(document).ready(function() {
+    $("#box").niceScroll("#box .wrapper",{boxzoom:true});  // hw acceleration enabled when using wrapper
+  });
+var box = document.getElementById('box')
+
+var parent = document.getElementById('list1')
+
+var parent2 = document.getElementById('list2')
+
+parent2.innerHTML = parent.innerHTML
+
+      /*启动定时器*/
+
+     var timer = setInterval(autoScrollLine,30)
+
+    /*单行向上滚动效果*/
+
+  function autoScrollLine() {
+
+    /*判断滚动内容是否已经滚完，滚完了则滚动的值重新设置到0
+
+    否则就每隔30毫秒向上滚动1px*/
+
+    if(box.scrollTop>=parent.offsetHeight){
+
+    box.scrollTop=0;
+
+    }else{
+
+      box.scrollTop++;
+
+    }
+
+      /*判断滚动的距离刚好为一条公告的高度时停掉定时器，
+
+      隔1s之后重新启动定时器即可实现公告滚动停留效果 */
+
+      if(box.scrollTop%box.offsetHeight==0){
+
+    clearInterval(timer)
+
+    setTimeout(()=>{
+
+        timer = setInterval(autoScrollLine,80)
+
+    },1000)
+
+    }
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+
+
+<div id="box">
+	<marquee id="boxs" align="left" behavior="scroll" direction="up" bgcolor= "#418BD0" height="200" width="500" hspace="0" vspace="0" loop="-1" scrollamount="5" scrolldelay="100" onmouseout="this.start()" onmouseover="this.stop()">
+	
+		<ul id="list1"></ul>
+	<div class="wrapper">
+	<!--假设在view.py向本HTML传入字典dict，其中形式为{time:[10.29,10.28....],shijian:[100,250,...],fuzebumen:[1000,8888,....]} 以上均为代号，如果value可以是字符串最好-->
+	{% for key in one %}
+				<span >在北京时间</span>
+				<span style="background-color:red;">{{key.CREATE_TIME}}</span>  <!--传进去！的社区 类型等等！在这里-->
+				<span style="background-color:yellow;">{{key.STREET_NAME}}</span>
+				<span >发生了</span>
+				<span style="background-color:yellow;">{{key.EVENT_TYPE_NAME}}</span>
+				<span style="background-color:orange;">的投诉</span>
+		    	 <ul id="list2"></ul>
+		{%endfor%}
+	<!--下面就不用改了-->
+
+
+	</div>
+	</marquee>
+</div>
+	
+</body>
+
+</html>
+

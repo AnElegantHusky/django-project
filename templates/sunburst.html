@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="../static/js/echarts.min.js"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 1000px;height:800px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        var List = {{ List|safe }};
+        // 指定图表的配置项和数据
+		
+        var data = [{
+    name: '处置中',
+    itemStyle: {
+        color: '#da0d68'
+    },
+    children: [{
+        name: '市容环卫',
+        itemStyle: {
+            color: '#975e6d'
+        },
+        value: List[0]
+        
+    }, {
+        name: '市政设施',
+        itemStyle: {
+            color: '#e0719c'
+        },
+        value: List[1]
+    }, {
+        name: '环保水务',
+        itemStyle: {
+            color: '#f99e1c'
+        },
+        value: List[2],
+    }]
+}, {
+    name: '按期结办',
+    children: [{
+        name: '市容环卫',
+        itemStyle: {
+            color: '#975e6d'
+        },
+        value:20
+    }, {
+        name: '市政设施',
+        itemStyle: {
+            color: '#e0719c'
+        },
+        value: 4
+    }, {
+        name: '环保水务',
+        itemStyle: {
+            color: '#f99e1c'
+        },
+        value: 20,
+    }]
+}, {
+    name: '超期结办',
+    children: [{
+        name: '市容环卫',
+        value:20,
+        itemStyle: {
+            color: '#975e6d'
+        },
+    }, {
+        name: '市政设施',
+        itemStyle: {
+            color: '#e0719c'
+        },
+        value: 6
+    }, {
+        name: '环保水务',
+        itemStyle: {
+            color: '#f99e1c'
+        },
+        value: 10,
+    }]
+}];
+
+option = {
+    series: {
+        type: 'sunburst',
+        data: data,
+        radius: [0, '90%'],
+        label: {
+            rotate: 'radial'
+        }
+    }
+};
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
