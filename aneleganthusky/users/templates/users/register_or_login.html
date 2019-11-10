@@ -1,0 +1,146 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html >
+<head>
+<meta charset="UTF-8">
+<title>Sign Up Login</title>
+<link rel="stylesheet" href="{% static "users/css/style.css" %}">
+</head>
+
+<body>
+<link href="{% static "users/css/style1.css" %}" rel="stylesheet">
+<link rel='stylesheet prefetch' href="{% static "users/css/style2.css" %}">
+<body>
+<div class="cotn_principal">
+  <div class="cont_centrar">
+    <div class="cont_login">
+      <div class="cont_info_log_sign_up">
+        <div class="col_md_login">
+          <div class="cont_ba_opcitiy">
+            <h2>欢迎登录</h2>
+            <br/><br/>
+            <button class="btn_login" onclick="cambiar_login()">LOGIN</button>
+          </div>
+        </div>
+        <div class="col_md_sign_up">
+          <div class="cont_ba_opcitiy">
+            <h2>欢迎注册</h2>
+            <br/><br/>
+            <button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN UP</button>
+          </div>
+        </div>
+      </div>
+      <div class="cont_back_info">
+        <div class="cont_img_back_grey"> <img src="{% static "users/img/shenzhen.jpg" %}" alt="" /> </div>
+      </div>
+      <div class="cont_forms" >
+        <div class="cont_img_back_"> <img src="{% static "users/img/shenzhen.jpg" %}" alt="" /> </div>
+        <form method="POST" name="loginform">
+          {% csrf_token %}
+          <div class="cont_form_login"> <i class="material-icons">&#xE5C4;</i>
+            <h2>LOGIN</h2>
+
+              <div class="fieldWrapper">
+                {{ loginform.message.errors }}
+                <label for="{{ loginform.username.id_for_label }}"></label>
+                {{ loginform.username }}
+              </div>
+              <div class="fieldWrapper">
+                {{ loginform.message.errors }}
+                <label for="{{ loginform.password.id_for_label }}"></label>
+                {{ loginform.password }}
+              </div>
+              <div class="form-group">
+                <button name="login_submit" class="btn_login" type="submit" onclick="cambiar_login()">Log In</button>
+              </div>
+          </div>
+        </form>
+        <form method="POST">
+          {% csrf_token %}
+          <div class="cont_form_sign_up"> <a href="#" onclick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
+            <h2>LOGIN</h2>
+              <div class="fieldWrapper">
+                {{ registerform.message.errors }}
+                <label for="{{ registerform.username.id_for_label }}"></label>
+                {{ registerform.username }}
+              </div>
+              <div class="fieldWrapper">
+                {{ registerform.message.errors }}
+                <label for="{{ registerform.staff_id.id_for_label }}"></label>
+                {{ registerform.staff_id }}
+              </div>
+              <div class="fieldWrapper">
+                {{ registerform.message.errors }}
+                <label for="{{ registerform.staff_verification.id_for_label }}"></label>
+                {{ registerform.staff_verification }}
+              </div>
+              <div class="fieldWrapper">
+                {{ registerform.message.errors }}
+                <label for="{{ registerform.password1.id_for_label }}"></label>
+                {{ registerform.password1 }}
+              </div>
+              <div class="fieldWrapper">
+                {{ registerform.message.errors }}
+                <label for="{{ registerform.password2.id_for_label }}"></label>
+                {{ registerform.password2 }}
+              </div>
+              <div class="form-group">
+              <button name="register_submit" class="btn_login" type="submit" onclick="cambiar_login()">Sign Up</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="{% static "users/js/index.js"  %}"></script>
+</body>
+
+</body>
+</html>
+
+<!--
+<table>
+                <tr>
+                    <td>{{ loginform.username.label_tag }}</td>
+                    <td>{{ loginform.username }}</td>
+                </tr>
+                <tr>
+                    <td>{{ loginform.password.label_tag }}</td>
+                    <td>{{ loginform.password }}</td>
+                </tr>
+               </table>
+
+                  <table>
+                    <tr>
+                        <td>{{ registerform.username.label_tag }}</td>
+                        <td>{{ registerform.username }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ registerform.staff_id.label_tag }}</td>
+                        <td>{{ registerform.staff_id }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ registerform.staff_verification.label_tag }}</td>
+                        <td>{{ registerform.staff_verification }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ registerform.password1.label_tag }}</td>
+                        <td>{{ registerform.password1 }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ registerform.password2.label_tag }}</td>
+                        <td>{{ registerform.password2 }}</td>
+                    </tr>
+                  </table>
+
+<input type="text" name="username" placeholder="用户名"><br>
+              <input type="password" name="password" placeholder="输入密码"><br>
+
+              <input type="text" name='{{ registerform.username }}' placeholder="用户名"><br>
+              <input type="text" name='{{ registerform.staff_id }}' placeholder="员工号"><br>
+              <input type="text" name='{{ registerform.staff_verification }}' placeholder="员工验证号"><br>
+              <input type="password" name='{{ registerform.password1 }}' placeholder="输入密码"><br>
+              <input type="password" name='{{ registerform.password2 }}' placeholder="验证密码"><br>
+-->
