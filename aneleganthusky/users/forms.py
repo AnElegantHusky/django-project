@@ -12,9 +12,19 @@ class UserRegisterForm(UserCreationForm):
         super(UserCreationForm, self).__init__(*args, **kwargs)
         fieldnames = ['username', 'staff_id', 'staff_verification','password1', 'password2']
         placeholders = ['用户名', '员工号', '员工验证号', '输入密码', '确认']
-        for fieldindex in [0, 1, 2, 3, 4]:
-            self.fields[fieldnames[fieldindex]].widget.attrs.update({'autocomplete': 'off',
-                                                                     'placeholder': placeholders[fieldindex]})
+        self.fields['username'].widget.attrs.update({"class": "info_input",
+                                                     "type": "text", "name": "name2", "placeholder": "用户名"})
+        self.fields['staff_id'].widget.attrs.update({"class": "info_input",
+                                                     "type": "text", "name": "worknumber", "placeholder": "员工号"})
+        self.fields['staff_verification'].widget.attrs.update({"class": "info_input",
+                                                      "type": "text", "confirmwork": "name", "placeholder": "员工号验证码"})
+        self.fields['password1'].widget.attrs.update({"class": "info_input",
+                                                      "type": "text", "name": "password2", "placeholder": "输入密码"})
+        self.fields['password2'].widget.attrs.update({"class": "info_input",
+                                                      "type": "text", "name": "confirmpassword", "placeholder": "确认密码"})
+
+
+
         """
     def __init__(self, *args, **kwargs):
         super(UserCreationForm, self).__init__(*args, **kwargs)
@@ -37,8 +47,8 @@ class UserRegisterForm(UserCreationForm):
 class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(UserLoginForm, self).__init__(*args, **kwargs)
-        fieldnames = ['username', 'password']
-        placeholders = ['输入用户名', '输入密码']
-        for fieldindex in [0, 1]:
-            self.fields[fieldnames[fieldindex]].widget.attrs.update({'autocomplete': 'off',
-                                                                     'placeholder': placeholders[fieldindex]})
+        self.fields['username'].widget.attrs.update({"class": "info_input",
+                                                     "type": "text", "name": "name", "placeholder": "用户名"})
+        self.fields['password'].widget.attrs.update({"class": "info_input",
+                                                     "type": "password", "name": "password", "placeholder": "输入密码"})
+

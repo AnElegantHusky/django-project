@@ -1,3 +1,33 @@
+.invalid:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: red;  
+}
+
+.invalid::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: red;
+}
+
+input.invalid:-ms-input-placeholder{
+  color: red;
+}
+
+input.invalid::-webkit-input-placeholder {
+  color: red;
+}
+.valid:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: green;  
+}
+
+.valid::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: green;
+}
+
+input.valid:-ms-input-placeholder{
+  color: green;
+}
+
+input.valid::-webkit-input-placeholder {
+  color: green;
+}
 
 * {
   margin: 0px auto;
@@ -6,6 +36,32 @@
 font-family: 'Lato', sans-serif;
 }
 
+#my_button{
+  position: absolute;
+  left: 172px;
+  top: 277px;
+  height: 31px;
+  color: black;
+}
+
+#code_input{
+  height: 30px;
+  width: 170px;
+  position: absolute;
+  top: 275px;
+  left: 30px;
+  text-align: left;
+}
+
+
+
+#v_container{
+  width: 50px;
+  height: 30px;
+  position: absolute;
+  top: 278px;
+  left: 202px;
+}
 .cotn_principal {
   position: absolute;
   width: 100%;
@@ -64,7 +120,7 @@ transition: all 0.5s;
 .cont_forms_active_login {
 box-shadow: 1px 10px 30px -10px rgba(0,0,0,0.5);
   height: 480px;
-top:100px;
+top:70px;
 left: 0px;
   -webkit-transition: all 0.5s;
 -moz-transition: all 0.5s;
@@ -77,7 +133,7 @@ transition: all 0.5s;
 .cont_forms_active_sign_up {
 box-shadow: 1px 10px 30px -10px rgba(0,0,0,0.5);
   height: 480px;
-top:100px;
+top:70px;
 left:320px;
 -webkit-transition: all 0.5s;
 -moz-transition: all 0.5s;
@@ -308,9 +364,9 @@ transition: all 0.5s;
 }
 
   
-.cont_form_sign_up > input {
+.info_input {
 text-align: left;
-  padding: 15px 5px;
+  padding: 12px 5px;
 margin-left: 10px;
 margin-top: 20px;
   width: 260px;
@@ -325,15 +381,6 @@ font-weight: 400;
 }
 
 
-.cont_form_login > input {
-  padding: 15px 5px;
-margin-left: 10px;
-margin-top: 20px;
-  width: 260px;
-border: none;
-text-align: left;
-  color: #757575;
-}
 
 .cont_form_login > h2 {
 margin-top: 110px; 
