@@ -10,8 +10,6 @@ class UserRegisterForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(UserCreationForm, self).__init__(*args, **kwargs)
-        fieldnames = ['username', 'staff_id', 'staff_verification','password1', 'password2']
-        placeholders = ['用户名', '员工号', '员工验证号', '输入密码', '确认']
         self.fields['username'].widget.attrs.update({"class": "info_input",
                                                      "type": "text", "name": "name2", "placeholder": "用户名"})
         self.fields['staff_id'].widget.attrs.update({"class": "info_input",
@@ -31,7 +29,7 @@ class UserRegisterForm(UserCreationForm):
         for fieldname in ['username', 'staff_id', 'staff_verification','password1', 'password2']:
             self.fields[fieldname].help_text = None
         """
-
+"""
     class Meta:
         model = User
         fields = ['username', 'staff_id', 'staff_verification','password1', 'password2']
@@ -42,6 +40,7 @@ class UserRegisterForm(UserCreationForm):
             'password1' : None,
             'password2' : None
         }
+"""
 
 
 class UserLoginForm(AuthenticationForm):
