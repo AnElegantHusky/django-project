@@ -1,0 +1,217 @@
+html body{width: 100% ; height:100%; overflow-x:hidden; }
+#menu {   /*侧边栏*/
+    z-index: 10000; /*最上层*/
+}
+
+#zhexiantu {
+    padding-top: 1%;
+    padding-left: 1%;
+    background-color: white;
+    width: 46%;
+    height: 74%;
+    position: absolute;
+    left: 8%;
+    top: 14%;
+    background-color: aliceblue;
+    border-width: 3px;
+    border-style: ridge;
+    border-radius: 15px;
+    box-shadow: 0 0 0 5px rgba(85,85,85,0.46);
+}
+
+.page_box{
+    position: relative;
+    width: 100%;
+}
+
+.page_title{
+    font-size: 36px;
+    color: whitesmoke;
+    font-family: "微软雅黑";
+    position: absolute;
+    top: 10%;
+    left: 25%;
+}
+
+#title_page2{
+    top: 6%;
+    left:30%;
+}
+.stack { /*yyn的民生事件柱状图*/
+    width: 98%;
+    height: 65%;
+    position: absolute;
+    top: 19%;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 2%;
+    background-color: aliceblue;
+    padding-top: 25%;
+    background-color: aliceblue;
+    border-width: 3px;
+    border-style: ridge;
+    border-radius: 15px;
+    box-shadow: 0 0 0 5px rgba(7,196,241,0.30);
+}
+
+#stack_container{
+    position: absolute;
+    left: 61%;
+    top:16%;
+    width: 35%;
+    height: 70%;
+}
+
+#container_relitu_hwc { /*热力图*/
+    position: absolute;
+    top: 16%;
+    left: 9%;
+    height: 76%;
+    width: 50%;
+    border-width: 3px;	/*//边缘的宽度，如果要分别设置可以这样：border-width: 15px 5px 15px 5px;依次为上、右、下、左*/
+    border-style: ridge;
+    border-radius: 15px;	/*//圆角的大小*/
+    box-shadow: 0 0 0 5px rgba(7,196,241,0.30);
+    z-index: 1;
+}
+.date_hwc { /*hwc时间选择*/
+    width: 18%;
+    height: 16%;
+    position: absolute;
+    left: 77%;
+    top: 37%;
+    z-index: 10
+}
+.date_hwc input{
+    width: 70px;
+    font-size: 12px;
+}
+.zhuzhuangtu_hwc {
+    width: 95%;
+    padding-top: 20%;
+    border-width: 3px;
+    border-style: ridge;
+    border-radius: 15px;
+    box-shadow: 0 0 0 5px rgba(7,196,241,0.30);
+    top: 24%;
+    height: 55%;
+    position: absolute;
+    background-color: aliceblue;
+    z-index: 10;
+}
+#zhuzhuangtu_container{
+    width: 35%;
+    height: 80%;
+    position: absolute;
+    left: 61%;
+    top: 14%;
+}
+
+body {
+    background-color: #676565;
+}
+#hwc_page1 {
+    background-color: #26394E;
+}
+/*yyn page2 css*/
+.demo-yyn {  /*yyn的第一个时间选择*/
+    width: 19%;
+    height: 18%;
+    color: black;
+    position: absolute;
+    left: 38%;
+    top: 28%;
+    z-index: 99;
+    padding-left: 10px;
+    padding-top: 10px;
+    background-color: rgba(74,124,111,0.2);
+    border-radius: 15%;
+}
+
+.demo-yyn input{
+    width: 33%;
+    font-size: 12px;
+}
+
+
+.date-stack {/*yyn的第二个时间选择*/
+    width: 28%;
+    height: 17%;
+    position: absolute;
+    left: 61%;
+    top: 32%;
+    z-index: 99;
+    padding-left: 7%;
+    background-color: rgba(74,124,111,0.2);
+}
+.date-stack input{
+    font-size: 12px;
+    width: 65px;
+}
+
+
+#main-yyn { /*yyn的多层饼状图*/
+    width: 48%;
+    height: 74%;
+    position: absolute;
+    left: 10%;
+    top: 19%;
+    padding-left: 10px;
+    padding-top: 10px;
+    background-color: aliceblue;
+    border-width: 3px;
+    border-style: ridge;
+    border-radius: 15px;
+    box-shadow: 0 0 0 5px rgba(7,196,241,0.30);
+}
+
+
+#box {    /*黄文昌的滚动未结办 大小不能在这改*/
+    position: absolute;
+    height: 38%;
+    width: 38%;
+    left: 56%;
+    top: 14%;
+    background-color: aliceblue;
+    border-width: 3px;	/*//边缘的宽度，如果要分别设置可以这样：border-width: 15px 5px 15px 5px;依次为上、右、下、左*/
+    border-style: ridge;
+    border-radius: 15px;	/*//圆角的大小*/
+    box-shadow: 0 0 0 5px rgba(85,85,85,0.46);
+    color: black;
+    font-family: 微软雅黑;
+}
+
+#yyn_page2 {
+    background-color: #497a6d;
+
+
+}
+#minshengfenxi {  /*民生分析饼状图*/
+    position: absolute;
+    top: 54%;
+    left: 56%;
+    width: 38%;
+    height: 36%;
+    background-color: aliceblue;
+    border-width: 3px;	/*//边缘的宽度，如果要分别设置可以这样：border-width: 15px 5px 15px 5px;依次为上、右、下、左*/
+    border-style: ridge;
+    border-radius: 15px;	/*//圆角的大小*/
+    box-shadow: 0 0 0 5px rgba(85,85,85,0.46);
+}
+.demo-yyn3{ /*yyn的第三个时间选择*/
+    position: absolute;
+    top: 64%;
+    left: 76%;
+    width: 18%;
+    height: 18%;
+    z-index: 99;
+}
+#page3{
+    background-color: #555555;
+}
+
+.demo-yyn3 input{
+    width: 34%;
+    font-size: 12px;
+}
+

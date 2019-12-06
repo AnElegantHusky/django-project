@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sign Up Login</title>
+<link rel="stylesheet" href="{% static "users/css/style.css" %}">
+<script src="{% static "users/js/login.js" %}"></script>
+<script src="{% static "users/js/checkcode.js" %}"></script>
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script type="text/javascript">
+
+</script>
+
+<style>
+  .error_text{
+    min-height: 10px;
+    height: auto;
+    _height: 14px;
+    padding: 2px 38px 8px;
+    font-size: 10px;
+    color: #a10a0a;
+    visibility: hidden;
+    text-align: left;
+  }
+</style>
+</head>
+<body>
+<link href="{% static "users/css/style1.css"  %}" rel="stylesheet">
+<link rel='stylesheet prefetch' href="{% static "users/css/style2.css" %}">
+</body>
+<div class="cotn_principal">
+  <div class="cont_centrar">
+    <div class="cont_login">
+      <div class="cont_info_log_sign_up">
+        <div class="col_md_login">
+          <div class="cont_ba_opcitiy">
+            <h2>欢迎登录</h2>
+            <br/><br/>
+            <button class="btn_login" onclick="cambiar_login()">LOGIN</button>
+          </div>
+        </div>
+        <div class="col_md_sign_up">
+          <div class="cont_ba_opcitiy">
+            <h2>欢迎注册</h2>
+            <br/><br/>
+            <button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN UP</button>
+          </div>
+        </div>
+      </div>
+      <div class="cont_back_info">
+        <div class="cont_img_back_grey"> <img src="{% static "users/img/shenzhen.jpg" %}" alt="" /> </div>
+      </div>
+        <div class="cont_forms" >
+          <div class="cont_img_back_"> <img src="{% static "users/img/shenzhen.jpg" %}" alt="" /> </div>
+            <div id="form_login" class="cont_form_login"> <a href="#" onclick="ocultar_login_sign_up()" ><i class="material-icons">&#xE5C4;</i></a>
+            <h2>LOGIN</h2>
+            <div id="v_container" ></div>
+            <input type="text" id="code_input" value="" placeholder="请输入验证码"/><button id="my_button" onclick="yanzheng()">验证</button>
+            <form method="post">
+            {% csrf_token %}
+            <input class="info_input" type="text" id="yonghu_id" name ='name' placeholder="用户名" />
+            <p class="error_text">空格</p>
+            <input class="info_input" type="password" id="yonghu_mima" name='password' placeholder="输入密码"/>
+            <p class="error_text" id="denglu_error">用户名或密码错误</p> 
+          </form>          
+            <button style="text-align: center; position: absolute; top: 340px; left:60px" class="btn_sign_up" onclick="checked()">LOGIN</button>
+          
+          </div>
+            
+            <div id="form_sign_up" class="cont_form_sign_up"> <a href="#" onclick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
+            <h2>SIGN UP</h2>
+            <form method="post">
+                {% csrf_token %}
+            <input class="info_input" id="uname_sign" type="text" name ='name2' placeholder="用户名" oninput="check_username()"/>
+            <p id="uname_error" class="error_text">用户名已存在</p>
+            <input class="info_input" id="yuangong_id" type="text" name='worknumber' placeholder="员工号"/>
+            <p class="error_text">空格</p>
+           <input class="info_input" id="yuangong_code" type="text" name='confirmwork' placeholder="员工号验证码" />
+           <p id="yuangong_error" class="error_text">员工号或员工验证码错误</p>
+            </form><form method="post">
+                {% csrf_token %}
+            <input class="info_input" id="shurumima" type="password" name='password2' placeholder="输入密码" onchange="check_mima()"/>
+            <p id="shurumima_error" class="error_text">密码</p>
+            <input class="info_input" id="querenmima" type="password" name='confirmpassword' placeholder="确认密码" oninput="check_querenmima()"/>
+            <p id="querenmima_error" class="error_text">密码不一致</p>
+          </form>
+          <button style="text-align: center;" class="btn_sign_up" onclick="check_zhuce()">SIGN UP</button>
+        
+          </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<script>
+  var denglu_check=-1;
+  var verifyCode = new GVerify("v_container");
+  var check_sign=[-1,-1,-1];
+  function check_username(){
+    $.ajax({
+        type: "POST",
+        url: "/users/register/username/post/",
+        dataType: "json",
+        data: {
+            csrfmiddlewaretoken: '{{csrf_token}}',
+            username: $("#uname_sign").val(),
+        },
+        async: true,
+        success: function (check_uname_return) {
+          if(!(check_uname_return['msg']=="用户名正确！")){
+            check_sign[0]=-1;
+            $("#uname_error").text(check_uname_return['msg']);
+            $("#uname_error").css("visibility","visible");
+          }
+          else{
+            check_sign[0]=1;
+            $("#uname_error").css("visibility","hidden");
+          }
+        }
+      })
+  }
+
+
+  function check_mima(){
+    check_querenmima();
+    $.ajax({
+        type: "POST",
+        url: "users/register/password1/post/",
+        dataType: "json",
+        data: {
+            csrfmiddlewaretoken: '{{csrf_token}}',
+            password1: $("#shurumima").val(),
+        },
+        async: true,
+        success: function (check_shurumima_return) {    
+          if(check_shurumima_return['msg']!="密码正确！"){
+            check_sign[1]=-1;
+            $("#shurumima_error").text(check_shurumima_return['msg'])
+            $("#shurumima_error").css("visibility","visible");
+          }
+          else{
+            check_sign[1]=1;
+            $("#shurumima_error").css("visibility","hidden");
+          }
+        }
+      })
+  }
+
+  function check_querenmima(){
+    if($("#querenmima").val()==$("#shurumima").val()){
+      $("#querenmima_error").css("visibility","hidden");
+      check_sign[2]=1;
+    }
+    else{
+      $("#querenmima_error").css("visibility","visible");
+      check_sign[2]=-1;
+    }
+  }
+
+  function yanzheng_denglu(){
+    $.ajax({
+        type: "POST",
+        url: "/users/login/post/check/post/",
+        dataType: "json",
+        data: {
+            csrfmiddlewaretoken: '{{csrf_token}}',
+            // username: "test",
+            // password: "Cx981102",
+            username: $("#yonghu_id").val(),
+            password: $("#yonghu_mima").val(),
+        },
+        async: true,
+        success: function (check_denglu_return) {
+          if(check_denglu_return['msg']=="登录成功！"){
+            $("#denglu_error").css("visibility","hidden");
+            setTimeout("javascript:location.href='/homepage/'", 50);
+            
+          }
+          else{
+            $("#denglu_error").text(check_denglu_return['msg']);
+            $("#denglu_error").css("visibility","visible");
+          }
+        },
+        error: function () {
+          alert(XMLHttpRequest.readyState);
+        }
+      })
+  }
+  
+  function check_zhuce(){
+    if(check_sign[0]==1&&check_sign[1]==1&&check_sign[2]==1)
+    {
+      tijiao_zhuce();
+    }else{
+
+      alert("请正确填写注册信息");
+    }
+  }
+
+  function tijiao_zhuce(){
+    $.ajax({
+        type: "POST",
+        url: "/users/register/post/check/post/",
+        dataType: "json",
+        data: {
+            csrfmiddlewaretoken: '{{csrf_token}}',
+            username:$("#uname_sign").val(),
+            staff_id:$("#yuangong_id").val(),
+            staff_verification:$("#yuangong_code").val(),
+            password1:$("#shurumima").val(),
+            password2:$("#querenmima").val()
+        },
+        async: true,
+        success: function (check_zhuce_return) {
+          if(!(check_zhuce_return['msg']=="注册成功！")){
+            $("#yuangong_error").text(check_zhuce_return['msg']);
+            $("#yuangong_error").css("visibility","visible");
+          }
+          else{
+            $("#yuangong_error").css("visibility","hidden");
+            alert(check_zhuce_return['msg']);
+            window.open(location, '_self');
+          }
+        } ,
+        error: function () {
+          alert(XMLHttpRequest.readyState);
+        }
+      })
+  }
+</script>
+</html>

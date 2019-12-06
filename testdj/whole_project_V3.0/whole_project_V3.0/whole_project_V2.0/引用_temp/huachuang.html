@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+<!--<meta charset="UTF-8">-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<title>第一小组的大项目</title>
+
+<!--外部CSS-->
+<link rel="stylesheet" href="css/style.css">
+<link href="css/demo.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="css/jqbar.css"/>
+<link rel="stylesheet" type="text/css" href="http://jonthornton.github.io/jquery-timepicker/jquery.timepicker.css" />
+<link rel="stylesheet" type="text/css" href="lib/bootstrap-datepicker.css" />
+<link rel="stylesheet" type="text/css" href="lib/pikaday.css" />
+<link rel="stylesheet" type="text/css" href="lib/jquery.ptTimeSelect.css" />
+<link rel="stylesheet" type="text/css" href="lib/site.css" />
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=oA81tgVZ7pYsejwFKu16o8dZaqU9VuGd"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+<script src="http://www.jq22.com/jquery/jquery-1.9.1.js"></script>
+<script src="http://jonthornton.github.io/jquery-timepicker/jquery.timepicker.js"></script>
+
+<!--下面是文件引用，上面是url引用-->
+<script src="js/cebianlan_yuanshi.js"></script>
+<script type="text/javascript" src="js/echarts.min.js"></script>
+<script src="lib/bootstrap-datepicker.js"></script>
+<script src="lib/pikaday.js"></script>
+<script src="lib/jquery.ptTimeSelect.js"></script>
+<script src="lib/moment.min.js"></script>
+<script src="lib/site.js"></script>
+<script src="js/jquery.datepair.js"></script>
+
+	<!--alarm----------------->
+	
+</head>
+
+<!--内部CSS-->
+<style>
+#menu {   /*侧边栏*/
+    z-index: 10000; /*最上层*/
+}
+#container_relitu_hwc { /*热力图*/
+    position: absolute;
+    top: 120px;
+    left: 100px;
+    height: 600px;
+    width: 800px;
+    z-index: 1;
+}
+.date_hwc { /*hwc时间选择*/
+    width: 300px;
+    height: 180px;
+    position: absolute;
+    right: 10px;
+    top: 150px;
+    z-index: 10;
+}
+.zhuzhuangtu_hwc {
+    width: 600px;
+    height: 400px;
+    position: absolute;
+    right: 20px;
+    top: 250px;
+    background-color: aliceblue;
+    z-index: 10;
+}
+body {
+    background-color: #676565;
+}
+.hwc_page1 {
+    position: relative;
+    width: 100%;
+    height: 750px;
+    border-style: solid;
+    border-color: black;
+    border-right-color: red;
+}
+/*yyn page2 css*/
+.demo-yyn {  /*yyn的第一个时间选择*/
+    width: 300px;
+    height: 150px;
+    color: black;
+    position: absolute;
+    left: 430px;
+    top: 120px;
+    z-index: 10;
+}
+.date-stack {/*yyn的第二个时间选择*/
+    width: 250px;
+    height: 100px;
+    position: absolute;
+    right: 100px;
+    top: 100px;
+    z-index: 99;
+}
+.stack { /*yyn的民生事件柱状图*/
+    width: 600px;
+    height: 430px;
+    position: absolute;
+    right: 60px;
+    top: 200px;
+	background-color: aliceblue;
+}
+#main-yyn { /*yyn的多层饼状图*/
+    width: 720px;
+    height: 600px;
+	position: absolute;
+	top:100px;
+    background-color: aliceblue;
+}
+.yyn_page2 {
+    position: relative;
+    width: 90%;
+    height: 1000px;
+    padding-left: 10%;
+    background-color: cornsilk;
+    border-style: solid;
+    border-color: blue rgb(25%,35%,45%) #909090 red;
+}
+/*yyn page2 css*/
+</style>
+
+<body>
+
+<!--各个DIV集合，主体部分----------> 
+
+<!--把DIV在JS调用前声明！！！！--------------------->
+	
+	
+	
+<div class="whole_page">
+  <div class="hwc_page1">
+    <div id="zhuzhuangtu"  class="zhuzhuangtu_hwc"></div>
+    <div id="menu">
+      <div class="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+      <div class="menu-inner">
+        <ul id="menu_list">
+          <li>姓名：黄先生</li>
+          <li>部门：教育局</li>
+          <li onmouseover="function a(){
+		alert(1)}"><img src="img/redian_tubiao.png" style="height:29px;position:relative;top:6px;">热点社区</li>
+          <li><img src="img/binzhuang_tubiao.png" style="height: 29px;position: relative;top:6px;">民生分析</li>
+          <li><img src="img/zhexian_tubiao.png" style="height: 29px;position: relative;top:6px;">工作情况</li>
+          <li><img src="img/yijian1.png" style="height: 29px;position: relative;top:10px;">意见和建议</li>
+          <li style="position:relative; top: 100px; left:30%;"><img src="img/zuojiantou.png" style="height: 29px;position: relative;top:10px;"> 退出</li>
+        </ul>
+      </div>
+      <svg version="1.1" id="blob" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path id="blob-path" d="M60,500H0V0h60c0,0,20,172,20,250S60,900,60,500z"/>
+      </svg>
+    </div>
+    <div id="container_relitu_hwc"></div>
+    <div id="r-result" style="display:none">
+      <input type="button"  οnclick="openHeatmap();" value="显示热力图"/>
+      <input type="button"  οnclick="closeHeatmap();" value="关闭热力图"/>
+    </div>
+    <article> <!--日期选择模块 hwc-->
+      <div class="date_hwc">
+        <p id="basicExample_hwc">
+          <input type="text" name="input1" class="date start" value="2018-10-31" readonly/>
+          to
+          <input type="text" name="input2" class="date end" value="2018-10-31" readonly/>
+        </p>
+        <br>
+        <button type="button"> 确认</button>
+      </div>
+    </article>
+  </div>
+  
+  <!--	yyn div模块-->
+  <div class="yyn_page2">
+    <section id="examples">
+      <article>
+        <div class="demo-yyn"> <!-- yyn的第一个时间选择器-->
+          <p>选择日期</p>
+          <p id="basicExample_yyn1">
+            <input type="text" name="input1" class="date start" value="2018-10-31" readonly/>
+            to
+            <input type="text" name="input2" class="date end" value="2018-10-31" readonly/>
+          </p>
+          <br>
+          <button type="button"> 确认</button>
+        </div>
+        <div class="date-stack"> <!-- yyn的第二个时间选择器-->
+          <p id="basicExample_yyn2">
+            <input type="text" name="input1" class="date start" value="2018-10-31" readonly/>
+            to
+            <input type="text" name="input2" class="date end" value="2018-10-31" readonly/>
+          </p>
+          <br>
+          <button type="button"> 确认</button>
+        </div>
+        <div id="main-yyn"></div>
+        <!--yyn的第一个ECHARTS-->
+        <div class="stack" id="main-stack"></div>
+        <!--yyn的第二个ECHARTS--> 
+        
+      </article>
+    </section>
+  </div>
+</div>
+<!--	yyn div模块--------------------------END>
+
+	<!--杨一诺的js ↓↓↓↓↓↓↓↓↓↓--> 
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main-yyn'));
+
+        // 指定图表的配置项和数据
+        var option = {
+    	tooltip: {
+        	trigger: 'item',
+        	formatter: "{a} <br/>{b}: {c} ({d}%)"
+    	},
+    	legend: {
+        	orient: 'vertical',
+			x: 'left',
+        	data:['处置中','超期结办','按期结办','处置中-问题类型','超期结办-问题类型','按期结办-问题类型'],
+			selected:{'处置中-问题类型':false,'超期结办-问题类型':false,'按期结办-问题类型':false}
+		},
+    	series: [
+        	{
+				name:'当前状态',
+				type:'pie',
+				selectedMode: 'single',
+            	radius: [0, '23%'],
+				
+            	label: {
+					normal: {
+						position: 'outside'
+					}
+				},
+            	labelLine: {
+                	normal: {
+                    	show: true,
+						length: 3,
+						length2:3
+                	}
+            	},
+            	data:[
+                	{value:335, name:'处置中'},
+					{value:45, name:'超期结办'},
+                	{value:522, name:'按期结办'}
+            	],
+				itemStyle: {
+                	emphasis: {
+                    	shadowBlur: 10,
+                    	shadowOffsetX: 0,
+                    	shadowColor: 'rgba(0, 0, 0, 0.5)'
+                	}
+            	}
+        	},
+        	{
+            	name:'处置中-问题类型',
+            	type:'pie',
+            	radius: ['36%', '48%'],
+				animationType:'scale',
+				label: {
+                	normal: {
+                    	formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                    	backgroundColor: '#eee',
+                    	borderColor: '#aaa',
+                    	borderWidth: 1,
+                    	borderRadius: 4,
+                    	// shadowBlur:3,
+                    	// shadowOffsetX: 2,
+                    	// shadowOffsetY: 2,
+                    	// shadowColor: '#999',
+						// padding: [0, 7],
+                    	rich: {
+                        	a: {
+                            	color: '#999',
+                            	lineHeight: 22,
+                            	align: 'center'
+                        	},	
+                        	// abg: {
+                        	//     backgroundColor: '#333',
+                        	//     width: '100%',
+                        	//     align: 'right',
+							//     height: 22,
+                        	//     borderRadius: [4, 4, 0, 0]
+                        	// },
+                        	hr: {
+								borderColor: '#aaa',
+                            	width: '100%',
+                            	borderWidth: 0.5,
+                            	height: 0
+                        	},	
+							b: {
+                            	fontSize: 16,
+                            	lineHeight: 33
+							},
+                        	per: {
+								color: '#eee',
+                            	backgroundColor: '#334455',
+                            	padding: [2, 4],
+                            	borderRadius: 2
+							}
+                    	}
+                	}
+            	},
+            	data:[
+					{value:123, name:'市容环卫'},
+                	{value:69, name:'环保水务'},
+                	{value:53, name:'市政设施'},
+                	{value:90, name:'其他'}
+            	]	
+        	},
+			{
+            	name:'超期结办-问题类型',
+            	type:'pie',
+            	radius: ['36%', '48%'],
+				animationType:'scale',
+				label: {
+                	normal: {
+                    	formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                    	backgroundColor: '#eee',
+                    	borderColor: '#aaa',
+                    	borderWidth: 1,
+                    	borderRadius: 4,
+                    	// shadowBlur:3,
+                    	// shadowOffsetX: 2,
+                    	// shadowOffsetY: 2,
+                    	// shadowColor: '#999',
+						// padding: [0, 7],
+                    	rich: {
+                        	a: {
+                            	color: '#999',
+                            	lineHeight: 22,
+                            	align: 'center'
+                        	},	
+                        	// abg: {
+                        	//     backgroundColor: '#333',
+                        	//     width: '100%',
+                        	//     align: 'right',
+							//     height: 22,
+                        	//     borderRadius: [4, 4, 0, 0]
+                        	// },
+                        	hr: {
+								borderColor: '#aaa',
+                            	width: '100%',
+                            	borderWidth: 0.5,
+                            	height: 0
+                        	},	
+							b: {
+                            	fontSize: 16,
+                            	lineHeight: 33
+							},
+                        	per: {
+								color: '#eee',
+                            	backgroundColor: '#334455',
+                            	padding: [2, 4],
+                            	borderRadius: 2
+							}
+                    	}
+                	}
+            	},
+            	data:[
+					{value:12, name:'市容环卫'},
+                	{value:9, name:'环保水务'},
+                	{value:5, name:'市政设施'},
+                	{value:19, name:'其他'}
+            	]	
+        	},
+			{
+            	name:'按期结办-问题类型',
+            	type:'pie',
+            	radius: ['36%', '48%'],
+				animationType:'scale',
+				label: {
+                	normal: {
+                    	formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                    	backgroundColor: '#eee',
+                    	borderColor: '#aaa',
+                    	borderWidth: 1,
+                    	borderRadius: 4,
+                    	// shadowBlur:3,
+                    	// shadowOffsetX: 2,
+                    	// shadowOffsetY: 2,
+                    	// shadowColor: '#999',
+						// padding: [0, 7],
+                    	rich: {
+                        	a: {
+                            	color: '#999',
+                            	lineHeight: 22,
+                            	align: 'center'
+                        	},	
+                        	// abg: {
+                        	//     backgroundColor: '#333',
+                        	//     width: '100%',
+                        	//     align: 'right',
+							//     height: 22,
+                        	//     borderRadius: [4, 4, 0, 0]
+                        	// },
+                        	hr: {
+								borderColor: '#aaa',
+                            	width: '100%',
+                            	borderWidth: 0.5,
+                            	height: 0
+                        	},	
+							b: {
+                            	fontSize: 16,
+                            	lineHeight: 33
+							},
+                        	per: {
+								color: '#eee',
+                            	backgroundColor: '#334455',
+                            	padding: [2, 4],
+                            	borderRadius: 2
+							}
+                    	}
+                	}
+            	},
+            	data:[
+					{value:213, name:'市容环卫'},
+                	{value:78, name:'环保水务'},
+                	{value:132, name:'市政设施'},
+                	{value:99, name:'其他'}
+            	]	
+        	},
+		]	
+		};
+		
+		
+		myChart.on('click', function (params){
+			if(params.componentType === 'series'){
+				if (params.seriesIndex === 0) {
+					if (params.dataIndex === 0) {
+						myChart.dispatchAction({
+    						type: 'legendSelect',
+    						// 图例名称
+    						name: '处置中-问题类型'
+							}			  
+						);	
+						myChart.dispatchAction({
+    						
+							type: 'legendUnSelect',
+							name: '超期结办-问题类型'
+							}			  
+						);	
+						myChart.dispatchAction({
+							type: 'legendUnSelect',
+							name: '按期结办-问题类型'
+							}				  
+						);	
+					}
+					else if(params.dataIndex === 1){
+						myChart.dispatchAction({
+    						type: 'legendUnSelect',
+    						// 图例名称
+    						name: '处置中-问题类型'
+							}			  
+						);	
+						myChart.dispatchAction({
+    						
+							type: 'legendSelect',
+							name: '超期结办-问题类型'
+							}			  
+						);	
+						myChart.dispatchAction({
+							type: 'legendUnSelect',
+							name: '按期结办-问题类型'
+							}				  
+						);	
+					}
+					else if(params.dataIndex === 2){
+						myChart.dispatchAction({
+    						type: 'legendUnSelect',
+    						// 图例名称
+    						name: '处置中-问题类型'
+							}			  
+						);	
+						myChart.dispatchAction({
+    						
+							type: 'legendUnSelect',
+							name: '超期结办-问题类型'
+							}			  
+						);	
+						myChart.dispatchAction({
+							type: 'legendSelect',
+							name: '按期结办-问题类型'
+							}				  
+						);	
+					}
+				}
+			}
+		});
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script> 
+<script>
+                $('#basicExample_yyn1 .date').datepicker({
+
+                    'format': 'yyyy-mm-dd',
+
+                    'autoclose': true
+
+                });
+
+                $('#basicExample_yyn1').datepair();
+
+    </script> 
+<script>
+
+                $('#basicExample_yyn2 .date').datepicker({
+
+                    'format': 'yyyy-mm-dd',
+
+                    'autoclose': true
+
+                });
+
+                $('#basicExample_yyn2').datepair();
+
+        </script> 
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart_stack = echarts.init(document.getElementById('main-stack'));
+		
+	var option_stack = {
+    	title: {
+        	text: '各街道民生事件情况',
+			top: 'top',
+        	left: 'center'
+    	},
+    	tooltip : {
+        	trigger: 'axis',
+        	axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            	type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        	}
+    	},
+    	legend: {
+			//orient: 'vertical',
+			top:30,
+			//right: 'center',
+        	data:['市容城管','禽畜养殖污染','市政/公共设施','其他']
+    	},
+    	grid: {
+        	left: '%',
+        	right: '4%',
+        	bottom: '3%',
+        	containLabel: true
+    	},
+    	xAxis : [
+        	{
+            	type : 'category',
+            	data : ['A街道','B街道','C街道','D街道','E街道','F街道','G街道']
+        	}
+    	],
+    	yAxis : [
+        	{	
+            	type : 'value'
+        	}
+    	],
+		series : [
+        	{	
+            	name:'市容城管',
+            	type:'bar',
+            	barWidth : 30,
+            	stack: 'A',
+            	data:[620, 732, 701, 734, 1090, 1130, 1120]
+        	},
+        	{	
+            	name:'禽畜养殖污染',
+            	type:'bar',
+            	stack: 'A',
+            	data:[120, 132, 101, 134, 290, 230, 220]
+        	},
+        	{
+            	name:'市政/公共设施',
+            	type:'bar',
+            	stack: 'A',
+            	data:[60, 72, 71, 74, 190, 130, 110]
+        	},
+        	{
+            	name:'其他',
+            	type:'bar',
+            	stack: 'A',
+            	data:[62, 82, 91, 84, 109, 110, 120]
+        	}
+    	]
+	};
+		myChart_stack.setOption(option_stack);
+	</script> 
+
+<!--yyn--模块 包含第二页的DIV和JS-------END--> 
+
+<!--各个DIV集合，主体部分-----------------------------------------------------------------END>	
+	
+<!--HWC内部javascript-------------> 
+
+<!--<script type="text/javascript">
+	/*document.getElementsByClassName('menu').onmouseover=function(){
+          document.getElementsByClassName('row1_hwc').style.color='red';
+   }*/
+   /*document.getElementsByClassName('menu').onmouseout=function(){
+          document.getElementsByClassName('inner').style.color='';
+   }*/
+	var oInp = document.getElementById("lalala");
+		oInp.onmouseover = function (){
+        oDiv.style.display = "block";
+        oInp.style.cursor = "pointer";
+    }
+	</script>--> 
+
+<script type="text/javascript">	
+var myChart_hwc = echarts.init(document.getElementById('zhuzhuangtu'));
+options = {
+    title: {
+        text: '当日投诉数前六社区',
+        subtext: '请相关部门注意'
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: {
+        type: 'value',
+        boundaryGap: [0, 0.01]
+    },
+    yAxis: {
+        type: 'category',
+        data: ['马峦社区','江岭社区','沙坣社区','金龟社区','田头社区','和平社区']
+    },
+    series: [
+        {
+            /*name: '2012年',*/
+            type: 'bar',
+            data: [19, 23, 31, 12, 13, 6]
+        }
+    ]
+};
+myChart_hwc.setOption(options);
+</script> 
+<script>
+                $('#basicExample_hwc .date').datepicker({
+                    'format': 'yyyy-mm-dd',
+                    'autoclose': true
+                });
+                $('#basicExample_hwc').datepair();
+            </script> 
+<script type="text/javascript">
+    var map = new BMap.Map("container_relitu_hwc");          // 创建地图实例
+    var point = new BMap.Point(114.36,22.6693);
+    map.centerAndZoom(point, 13);             // 初始化地图,设置中心点坐标和地图级别
+    var marker = new BMap.Marker(point);
+	map.setCurrentCity("深圳");		//设置当前显示城市
+    map.enableScrollWheelZoom(); // 允许滚轮缩放
+ 	map.addOverlay(marker);
+    var points =[
+{"lng":"114.367638","lat":"22.74885","count":"20","branch":"坪环社区"},
+{"lng":"114.330338","lat":"22.692444","count":"80","branch":"六联社区"},
+{"lng":"114.289124","lat":"22.667711","count":"60","branch":"碧岭社区"},
+{"lng":"114.310036","lat":"22.669346","count":"60","branch":"汤坑社区"},
+{"lng":"114.320023","lat":"22.673258","count":"60","branch":"沙湖社区"},
+{"lng":"114.331726","lat":"22.638508","count":"6000","branch":"马峦社区"},
+{"lng":"114.355347","lat":"22.685249","count":"60","branch":"江岭社区"},
+{"lng":"114.362282","lat":"22.685459","count":"60","branch":"沙坣社区"},
+{"lng":"114.399948","lat":"22.657915","count":"60","branch":"金龟社区"},
+{"lng":"114.380348","lat":"22.691509","count":"80","branch":"石井社区"},
+{"lng":"114.401871","lat":"22.691526","count":"90","branch":"田头社区"},
+{"lng":"114.415359","lat":"22.694683","count":"100","branch":"田心社区"},
+{"lng":"114.391357","lat":"22.709625","count":"60","branch":"竹坑社区"},		
+{"lng":"114.368431","lat":"22.698362","count":"60","branch":"南布社区"},
+{"lng":"114.363579","lat":"22.749115","count":"60","branch":"坪山社区"},
+{"lng":"114.34523","lat":"22.701197","count":"200","branch":"六和社区"},
+{"lng":"114.34396","lat":"22.688491","count":"20","branch":"和平社区"},
+{"lng":"114.383545","lat":"22.746918","count":"30","branch":"坑梓社区"},
+{"lng":"114.362869","lat":"22.728525","count":"40","branch":"老坑社区"},
+{"lng":"114.365944","lat":"22.751028","count":"50","branch":"龙田社区"},
+{"lng":"114.374771","lat":"22.740631","count":"60","branch":"秀新社区"},
+{"lng":"114.400459","lat":"22.753141","count":"70","branch":"金沙社区"},
+{"lng":"114.397934","lat":"22.755907","count":"80","branch":"沙田社区"},
+
+];//这里面添加经纬度！通过count接收大小
+
+    if(!isSupportCanvas()){
+        alert('热力图目前只支持有canvas支持的浏览器,您所使用的浏览器不能使用热力图功能~')
+    }
+    //详细的参数,可以查看heatmap.js的文档 https://github.com/pa7/heatmap.js/blob/master/README.md
+    //参数说明如下:
+    /* visible 热力图是否显示,默认为true
+     * opacity 热力的透明度,1-100
+     * radius 势力图的每个点的半径大小
+     * gradient  {JSON} 热力图的渐变区间 . gradient如下所示
+     *  {
+            .2:'rgb(0, 255, 255)',
+            .5:'rgb(0, 110, 255)',
+            .8:'rgb(100, 0, 255)'
+        }
+        其中 key 表示插值的位置, 0~1.
+            value 为颜色值.
+     */
+    heatmapOverlay = new BMapLib.HeatmapOverlay({"radius":40,"visible":true});
+    map.addOverlay(heatmapOverlay);
+    heatmapOverlay.setDataSet({data:points,max:100});
+    //closeHeatmap();
+    //判断浏览区是否支持canvas
+    function isSupportCanvas(){
+        var elem = document.createElement('canvas');
+        return !!(elem.getContext && elem.getContext('2d'));
+    }
+ 
+    function setGradient(){
+        /*格式如下所示:
+        {
+            0:'rgb(102, 255, 0)',
+            .5:'rgb(255, 170, 0)',
+            1:'rgb(255, 0, 0)'
+        }*/
+        var gradient = {};
+        var colors = document.querySelectorAll("input[type='color']");
+        colors = [].slice.call(colors,0);
+        colors.forEach(function(ele){
+            gradient[ele.getAttribute("data-key")] = ele.value;
+        });
+        heatmapOverlay.setOptions({"gradient":gradient});
+    }
+    function openHeatmap(){
+        heatmapOverlay.show();
+    }
+    function closeHeatmap(){
+        heatmapOverlay.hide();
+    }	
+	function markerFun (points_now,label,infoWindows) {// 函数 创建多个标注
+                var markers = new BMap.Marker(points_now);
+                map.addOverlay(markers);
+                markers.setLabel(label);
+                markers.addEventListener("click",function (event) {
+                    console.log("0001");
+                    map.openInfoWindow(infoWindows,points_now);//参数：窗口、点  根据点击的点出现对应的窗口
+                });
+    }
+	
+var mapPoints =[
+ 
+{x:114.367638,y:22.74885,title:"A",branch:"坪环社区"},
+{x:114.330338,y:22.692444,title:"A",branch:"六联社区"},
+{x:114.289124,y:22.667711,title:"A",branch:"碧岭社区"},
+{x:114.310036,y:22.669346,title:"A",branch:"汤坑社区"},
+{x:114.320023,y:22.673258,title:"A",branch:"沙湖社区"},
+{x:114.331726,y:22.638508,title:"A",branch:"马峦社区"},
+{x:114.355347,y:22.685249,title:"A",branch:"江岭社区"},
+{x:114.362282,y:22.685459,title:"A",branch:"沙坣社区"},
+{x:114.399948,y:22.657915,title:"A",branch:"金龟社区"},
+{x:114.380348,y:22.691509,title:"A",branch:"石井社区"},
+{x:114.401871,y:22.691526,title:"A",branch:"田头社区"},
+{x:114.415359,y:22.694683,title:"A",branch:"田心社区"},
+{x:114.391357,y:22.709625,title:"A",branch:"竹坑社区"},		
+{x:114.368431,y:22.698362,title:"A",branch:"南布社区"},
+{x:114.363579,y:22.749115,title:"A",branch:"坪山社区"},
+{x:114.34523,y:22.701197,title:"A",branch:"六和社区"},		
+{x:114.34396,y:22.688491,title:"A",branch:"和平社区"},
+{x:114.383545,y:22.746918,title:"A",branch:"坑梓社区"},
+{x:114.362869,y:22.728525,title:"A",branch:"老坑社区"},
+{x:114.365944,y:22.751028,title:"A",branch:"龙田社区"},
+{x:114.374771,y:22.740631,title:"A",branch:"秀新社区"},
+{x:114.400459,y:22.753141,title:"A",branch:"金沙社区"},
+{x:114.397934,y:22.755907,title:"A",branch:"沙田社区"}
+];
+
+var i = 0; 
+	for (;i<mapPoints.length;i++) {
+                var points_now = new BMap.Point(mapPoints[i].x,mapPoints[i].y);//创建坐标点
+                var opts = {
+                    width:250,
+                    height: 100,
+                    title:mapPoints[i].title
+                };
+                var label = new BMap.Label(mapPoints[i].branch,{
+                    offset:new BMap.Size(25,5)
+                });
+                var infoWindows = new BMap.InfoWindow(mapPoints[i].con,opts);
+                markerFun(points_now,label,infoWindows);
+            }
+</script> <!--热力图+相应点标识-->
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>评价反馈</title>
+
+<link type="text/css" href="../static/css/pingjia_style.css" rel="stylesheet" />
+
+</head>
+<body>
+<div >
+  <form method="post">
+  {% csrf_token %}
+    <input style="display:none" id="star_num" name="stars"/>
+    <input style="display:none" class="reason_choice" value="false" id="reason1" name="reason1"/>
+    <input style="display:none" class="reason_choice" value="false" id="reason2" name="reason2"/>
+    <input style="display:none" class="reason_choice" value="false" id="reason3" name="reason3"/>
+    <input style="display:none" class="reason_choice" value="false" id="reason4" name="reason4"/>
+    <input style="display:none" class="reason_choice" value="false" id="reason5" name="reason5"/>
+    <input style="display:none" class="reason_choice" value="false" id="reason6" name="reason6"/>
+    <input style="display:none" id="comment_detail" name="comment"/>
+    <input style="position:absolute; top:680px; left:75%;width:100px;height:40px;" name="comment_submit" type="submit" value="评价完成" href="javascript:;" id="order_evaluation"/>
+  </form>
+</div>
+<div class="order-evaluation clearfix">
+    <h4>给“坪山大数据系统”的评价</h4>
+    <p>请严肃认真对待此次评价哦！您的评价对我们真的真的非常重要！</p>
+    <div class="block">
+        <ul>
+            <li data-default-index="0">
+				<span>
+					<img src="../static/img/x1.png">
+					<img src="../static/img/x1.png">
+					<img src="../static/img/x1.png">
+					<img src="../static/img/x1.png">
+					<img src="../static/img/x1.png">
+				</span>
+                <em class="level"></em>
+            </li>
+        </ul>
+    </div>
+    <div class="order-evaluation-text">
+        本大数据系统有什么需要改进的地方呢？
+    </div>
+    <div class="order-evaluation-checkbox">
+        <ul class="clearfix">
+            <li class="order-evaluation-check" data-impression="1">数据更新不及时<i class="iconfont icon-checked">√</i></li>
+            <li class="order-evaluation-check" data-impression="2" >界面不够美观<i class="iconfont icon-checked">√</i></li>
+            <li class="order-evaluation-check" data-impression="3" >操作不方便<i class="iconfont icon-checked">√</i></li>
+            <li class="order-evaluation-check" data-impression="4" >功能太少<i class="iconfont icon-checked">√</i></li>
+            <li class="order-evaluation-check" data-impression="5" >图表显示过慢<i class="iconfont icon-checked">√</i></li>
+            <li class="order-evaluation-check" data-impression="6" >数据错误<i class="iconfont icon-checked">√</i></li>
+        </ul>
+    </div>
+    <div class="order-evaluation-textarea">
+        <textarea name="content" id="TextArea1" placeholder="请输入您的其他意见或建议..." onKeyUp="words_deal();" ></textarea>
+        <span>还可以输入<em id="textCount">140</em>个字</span>
+    </div>
+    <br/><br/>
+
+
+
+</div>
+
+<div id="order_evaluate_modal" class="dmlei_tishi_info"></div>
+
+
+<script type="text/javascript" src="../static/js/jquery.min.js"></script>
+<script type="text/javascript">
+    /*
+     * 根据index获取 str
+     * **/
+
+    function byIndexLeve(index){
+        var str ="";
+        switch (index)
+        {
+            case 0:
+                str="差评";
+                break;
+            case 1:
+                str="较差";
+                break;
+            case 2:
+                str="中等";
+                break;
+            case 3:
+                str="一般";
+                break;
+            case 4:
+                str="好评";
+                break;
+        }
+        return str;
+    }
+    //  星星数量
+    var stars = [
+        ['x2.png', 'x1.png', 'x1.png', 'x1.png', 'x1.png'],
+        ['x2.png', 'x2.png', 'x1.png', 'x1.png', 'x1.png'],
+        ['x2.png', 'x2.png', 'x2.png', 'x1.png', 'x1.png'],
+        ['x2.png', 'x2.png', 'x2.png', 'x2.png', 'x1.png'],
+        ['x2.png', 'x2.png', 'x2.png', 'x2.png', 'x2.png'],
+    ];
+    $(".block li").find("img").hover(function(e) {
+        var obj = $(this);
+        var index = obj.index();
+        if(index < (parseInt($(".block li").attr("data-default-index")) -1)){
+            return ;
+        }
+        var li = obj.closest("li");
+        var star_area_index = li.index();
+        for (var i = 0; i < 5; i++) {
+            li.find("img").eq(i).attr("src", "../static/img/" + stars[index][i]);//切换每个星星
+        }
+        $(".level").html(byIndexLeve(index));
+    }, function() {
+    })
+
+    $(".block li").hover(function(e) {
+    }, function() {
+        var index = $(this).attr("data-default-index");//点击后的索引
+        index = parseInt(index);
+        console.log("index",index);
+        $(".level").html(byIndexLeve(index-1));
+        console.log(byIndexLeve(index-1));
+        $(".order-evaluation ul li:eq(0)").find("img").attr("src","../static/img/x1.png");
+        for (var i=0;i<index;i++){
+
+            $(".order-evaluation ul li:eq(0)").find("img").eq(i).attr("src","../static/img/x2.png");
+        }
+    })
+    $(".block li").find("img").click(function() {
+        var obj = $(this);
+        var li = obj.closest("li");
+        var star_area_index = li.index();
+        var index1 = obj.index();
+        li.attr("data-default-index", (parseInt(index1)+1));
+        var index = $(".block li").attr("data-default-index");//点击后的索引
+        index = parseInt(index);
+        console.log("index",index);
+        $(".level").html(byIndexLeve(index-1));
+        console.log(byIndexLeve(index-1));
+        $(".order-evaluation ul li:eq(0)").find("img").attr("src","../static/img/x1.png");
+        for (var i=0;i<index;i++){
+            $(".order-evaluation ul li:eq(0)").find("img").eq(i).attr("src","../static/img/x2.png");
+        }
+        $("#star_num").attr("value",index1+1);
+
+    });
+    //印象
+    var reason_check=document.getElementsByClassName("reason_choice");
+    $(".order-evaluation-check").click(function(){
+        if($(this).hasClass('checked')){
+            //当前为选中状态，需要取消
+            switch($(this).attr('data-impression')){
+                case '1':reason_check[0].value="false"; break;
+                case '2':reason_check[1].value="false"; break;
+                case '3':reason_check[2].value="false"; break;
+                case '4':reason_check[3].value="false"; break;
+                case '5':reason_check[4].value="false"; break;
+                case '6':reason_check[5].value="false"; break;
+            }
+            $(this).removeClass('checked');
+        }else{
+            //当前未选中，需要增加选中
+            switch($(this).attr('data-impression')){
+                case '1':reason_check[0].value="true"; break;
+                case '2':reason_check[1].value="true"; break;
+                case '3':reason_check[2].value="true"; break;
+                case '4':reason_check[3].value="true"; break;
+                case '5':reason_check[4].value="true"; break;
+                case '6':reason_check[5].value="true"; break;
+            }
+            $(this).addClass('checked');
+        }
+    });
+    //评价字数限制
+    function words_deal()
+    {
+        var curLength=$("#TextArea1").val().length;
+        if(curLength>140)
+        {
+            var num=$("#TextArea1").val().substr(0,140);
+            $("#TextArea1").val(num);
+            alert("超过字数限制，多出的字将被截断！" );
+        }
+        else
+        {
+            $("#textCount").text(140-$("#TextArea1").val().length);
+        }
+    }
+    $("#order_evaluation").click(function(e){
+        var text =$("#TextArea1").val();
+        $("#comment_detail").attr("value",text);
+        $("#order_evaluate_modal").html("感谢您的评价！么么哒(* ￣3)(ε￣ *)").show().delay(3000).hide(500);
+        e.preventDefault();
+        $.ajax({
+            dataType: 'JSON',
+            async: true,
+            type: 'POST',
+            url: "/homepage/pingjia/post/",
+            data: {
+                csrfmiddlewaretoken: '{{csrf_token}}',
+                stars:$("#star_num").val(),
+                reason1:$("#reason1").val(),                
+                reason2:$("#reason2").val(),            
+                reason3:$("#reason3").val(),            
+                reason4:$("#reason4").val(),            
+                reason5:$("#reason5").val(),            
+                reason6:$("#reason6").val(),            
+                comment:$("#comment_detail").val()
+            },
+            success: function (result) {
+                window.open(location, '_self');
+            },
+            error: function() {
+                alert("failed to submit comment");
+            }
+        })    
+    })
+</script>
+
+</body>
+</html>

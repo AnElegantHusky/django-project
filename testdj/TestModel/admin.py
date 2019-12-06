@@ -1,5 +1,5 @@
 from django.contrib import admin
-from TestModel.models import Test, Contact, Tag ,Dic ,user1
+from TestModel.models import Test, Contact, Tag ,Dic ,user1,sysclock,Comment,Staff
 
 
 # Register your models here.
@@ -21,6 +21,37 @@ class ContactAdmin(admin.ModelAdmin):
         }]
 
     )
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display=('star','context')
+    search_fields=('star',)
+    fieldsets = (
+        ['评价星级', {
+            'fields': ('star',),
+        }],
+        ['评价内容', {
+            'fields': ('context',),
+        }],
+        ['数据更新不及时？', {
+            'fields': ('reason_1',),
+        }],
+        ['界面不够美观？', {
+            'fields': ('reason_2',),
+        }],
+        ['操作不方便？', {
+            'fields': ('reason_3',),
+        }],
+        ['功能太少？', {
+            'fields': ('reason_4',),
+        }],
+        ['图表显示过慢？', {
+            'fields': ('reason_5',),
+        }],
+        ['数据错误？', {
+            'fields': ('reason_6',),
+        }],
+
+    )
 class Contact1Admin(admin.ModelAdmin):
     list_display=('COMMUNITY_NAME','MAIN_TYPE_NAME','SUB_TYPE_NAME','CREATE_TIME')
     search_fields=('COMMUNITY_NAME',)
@@ -34,7 +65,14 @@ class Contact1Admin(admin.ModelAdmin):
         }]
 
     )
+class TimeAdmin(admin.ModelAdmin):
+    list_display = ('time',)
+class StaffAdmin(admin.ModelAdmin):
+    list_display=('staff_id','staff_username','staff_already_exist')
 
-admin.site.register(Contact, ContactAdmin)
-admin.site.register([Test,user1])
+#admin.site.register(Contact, ContactAdmin)
+admin.site.register(sysclock,TimeAdmin)
+admin.site.register(Staff,StaffAdmin)
+#admin.site.register(Contact, ContactAdmin)
 admin.site.register(Dic,Contact1Admin)
+admin.site.register(Comment,CommentAdmin)

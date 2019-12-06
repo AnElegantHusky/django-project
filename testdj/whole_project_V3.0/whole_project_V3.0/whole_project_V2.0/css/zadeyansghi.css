@@ -1,0 +1,135 @@
+
+#menu {   /*侧边栏*/
+    z-index: 10000; /*最上层*/
+}
+.title_page1{
+	font-family: "微软雅黑";
+	position: absolute;
+    top: 120px;
+    right: 200px;
+	font-size: 36px;
+	color:whitesmoke;
+	/*border:3px solid; 
+	bordercolor:white;*/
+}
+#container_relitu_hwc { /*热力图*/
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    height: 480px;
+    width: 650px;
+	border-width: 7px;	/*//边缘的宽度，如果要分别设置可以这样：border-width: 15px 5px 15px 5px;依次为上、右、下、左*/
+	border-style: ridge;
+	border-radius: 15px;	/*//圆角的大小*/
+	box-shadow: 0 0 0 10px rgba(7,196,241,0.30);
+    z-index: 1;
+}
+.date_hwc { /*hwc时间选择*/
+    width: 260px;
+    height: 180px;
+    position: absolute;
+    left:1020px;
+    top: 240px;
+    z-index: 10;
+}
+.zhuzhuangtu_hwc {
+    width: 430px;
+	padding-top: 80px;
+	border-width: 7px;	/*//边缘的宽度，如果要分别设置可以这样：border-width: 15px 5px 15px 5px;依次为上、右、下、左*/
+	border-style: ridge;
+	border-radius: 15px;	/*//圆角的大小*/
+	box-shadow: 0 0 0 10px rgba(7,196,241,0.30);
+	top: 200px;
+	
+    height: 300px;	
+    position: absolute;
+    left:800px; 
+    background-color: aliceblue;
+    z-index: 10;
+}
+body {
+    background-color: #676565;
+}
+.hwc_page1 {
+    position: relative;
+    width: 100%;
+    height: 650px;
+    border-style: solid;
+    border-color: black;
+    border-right-color: red;
+}
+/*yyn page2 css*/
+.demo-yyn {  /*yyn的第一个时间选择*/
+    width: 300px;
+    height: 150px;
+    color: black;
+    position: absolute;
+    left: 460px;
+    top: 130px;
+    z-index: 99;
+}
+.date-stack {/*yyn的第二个时间选择*/
+    width: 250px;
+    height: 100px;
+    position: absolute;
+    right: 30px;
+    top: 120px;
+    z-index: 99;
+}
+
+.stack { /*yyn的民生事件柱状图*/
+    width: 500px;
+    height: 300px;
+    position: absolute;
+    left: 730px;
+    top: 100px;
+    background-color: aliceblue;
+	padding-top: 100px;
+}
+#main-yyn { /*yyn的多层饼状图*/
+    width: 600px;
+    height: 650px;
+    position: absolute;
+	left:100px;
+    top: 100px;
+    background-color: aliceblue;
+}
+#box {    /*黄文昌的滚动未结办 大小不能在这改*/
+    position: absolute;
+    left: 600px;
+    top: 60px;
+}
+
+.yyn_page2 {
+    position: relative;
+    width: 90%;
+    height: 700px;
+    padding-left: 10%;
+    background-color:rgba(44,67,96,1.00);
+   
+}
+#minshengfenxi {  /*民生分析饼状图*/
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    width: 600px;
+    height: 300px;
+    background-color: aliceblue;
+}
+.demo-yyn3{ /*yyn的第三个时间选择*/ 
+    position: absolute;
+    top: 200px;
+    left: 500px;
+    width: 300px;
+    height:150px;
+	z-index: 99;
+}
+.page3{
+	position: relative;
+    width: 90%;
+    height: 700px;
+    padding-left: 10%;
+    background-color:bisque;
+}
+
+

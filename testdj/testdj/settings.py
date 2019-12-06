@@ -39,11 +39,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'TestModel',               # 添加此项
     'django_crontab',
+    'users',
 )
 
 CRONJOBS = [
-    ('*/1 * * * *', 'testdj.shuaxin.cron', '>>' + os.path.join(BASE_DIR, 'crons.log')),
-    ('*/1 * * * *', 'testdj.shuaxin.shuaa')
+    #('*/1 * * * *', 'testdj.shuaxin.cron', '>>' + os.path.join(BASE_DIR, 'crons.log')),
+    ('*/1 * * * *', 'testdj.systemclock.clock'),
 ]
 
 MIDDLEWARE = [
@@ -82,8 +83,8 @@ WSGI_APPLICATION = 'testdj.wsgi.application'
 
 DATABASES = {
     'default': {
-        #'ENGINE': 'django.db.backends.mysql',
-        'ENGINE': 'django.db.backends.mysql',  # 链接配置换成这个
+        'ENGINE': 'django.db.backends.mysql',
+        #'ENGINE': 'mysql.connector.django',  # 链接配置换成这个
         'NAME': 'wordpress',
         'USER': 'root',
         'PASSWORD': 'XSYVOqe92hIS',
@@ -143,3 +144,9 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(HERE, 'static/'),
 )
+
+LOGIN_URL = 'register-or-login'
+
+LOGIN_REDIRECT_URL = 'register-or-login'
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

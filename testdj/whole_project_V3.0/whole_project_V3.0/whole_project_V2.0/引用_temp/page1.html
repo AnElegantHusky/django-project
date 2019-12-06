@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>图一</title>
+    <!-- 引入 echarts.js -->
+    <script src="echarts.min.js"></script>
+	
+	
+	<meta name="description" content="A jQuery plugin for intelligently selecting date and time ranges inspired by Google Calendar." />
+
+   <script src="http://www.jq22.com/jquery/jquery-1.9.1.js"></script>
+    <script src="http://jonthornton.github.io/jquery-timepicker/jquery.timepicker.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://jonthornton.github.io/jquery-timepicker/jquery.timepicker.css" />
+
+
+
+    <script src="lib/bootstrap-datepicker.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap-datepicker.css" />
+
+
+
+    <script src="lib/pikaday.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="lib/pikaday.css" />
+
+
+
+    <script src="lib/jquery.ptTimeSelect.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="lib/jquery.ptTimeSelect.css" />
+
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.7.2/themes/smoothness/jquery-ui.css" type="text/css" media="all" />
+
+
+	<script type="text/javascript" src="http://code.jquery.com/ui/1.7.2/jquery-ui.js"></script>
+	
+
+    <script src="lib/moment.min.js"></script>
+
+    <script src="lib/site.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="lib/site.css" />
+
+
+
+    <script src="jquery.datepair.js"></script>
+	<style>
+		.demo-yyn{
+			position:absolute;
+			left:260px;
+			top:50px;
+			z-index: 99;		
+		}
+		.date-stack{
+			position:absolute;
+			left:800px;
+			top:350px;
+			z-index: 99;	
+		}
+		.stack{
+			position:absolute;
+			left:750px;
+			top:400px;
+		}
+	</style>
+</head>
+	
+<body>
+	<section id="examples">
+	 <article>
+		<div class="demo-yyn" style="width: 300px;height:150px;">
+  			<p>选择日期</p>
+  			<p id="basicExample">
+    			<input type="text" name="input1" class="date start" value="2018-10-31" readonly/>
+    				to
+    			<input type="text" name="input2" class="date end" value="2018-10-31" readonly/>
+  			</p>
+  			<br>
+  			<button type="button"> 确认</button>
+		</div>
+		<script>
+
+                $('#basicExample .date').datepicker({
+
+                    'format': 'yyyy-mm-dd',
+
+                    'autoclose': true
+
+                });
+
+                $('#basicExample').datepair();
+
+        </script>
+
+  	</article>
+	</section>
+
+
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom --> 
+    <div id="main-yyn" style="width: 720px;height:800px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main-yyn'));
+
+        // 指定图表的配置项和数据
+        var option = {
+    	tooltip: {
+        	trigger: 'item',
+        	formatter: "{a} <br/>{b}: {c} ({d}%)"
+    	},
+    	legend: {
+        	orient: 'vertical',
+			x: 'left',
+        	data:['处置中','超期结办','按期结办','处置中-问题类型','超期结办-问题类型','按期结办-问题类型'],
+			selected:{'处置中-问题类型':false,'超期结办-问题类型':false,'按期结办-问题类型':false}
+		},
+    	series: [
+        	{
+				name:'当前状态',
+				type:'pie',
+				selectedMode: 'single',
+            	radius: [0, '23%'],
+				
+            	label: {
+					normal: {
+						position: 'outside'
+					}
+				},
+            	labelLine: {
+                	normal: {
+                    	show: true,
+						length: 3,
+						length2:3
+                	}
+            	},
+            	data:[
+                	{value:335, name:'处置中'},
+					{value:45, name:'超期结办'},
+                	{value:522, name:'按期结办'}
+            	],
+				itemStyle: {
+                	emphasis: {
+                    	shadowBlur: 10,
+                    	shadowOffsetX: 0,
+                    	shadowColor: 'rgba(0, 0, 0, 0.5)'
+                	}
+            	}
+        	},
+        	{
+            	name:'处置中-问题类型',
+            	type:'pie',
+            	radius: ['36%', '48%'],
+				animationType:'scale',
+				label: {
+                	normal: {
+                    	formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                    	backgroundColor: '#eee',
+                    	borderColor: '#aaa',
+                    	borderWidth: 1,
+                    	borderRadius: 4,
+                    	// shadowBlur:3,
+                    	// shadowOffsetX: 2,
+                    	// shadowOffsetY: 2,
+                    	// shadowColor: '#999',
+						// padding: [0, 7],
+                    	rich: {
+                        	a: {
+                            	color: '#999',
+                            	lineHeight: 22,
+                            	align: 'center'
+                        	},	
+                        	// abg: {
+                        	//     backgroundColor: '#333',
+                        	//     width: '100%',
+                        	//     align: 'right',
+							//     height: 22,
+                        	//     borderRadius: [4, 4, 0, 0]
+                        	// },
+                        	hr: {
+								borderColor: '#aaa',
+                            	width: '100%',
+                            	borderWidth: 0.5,
+                            	height: 0
+                        	},	
+							b: {
+                            	fontSize: 16,
+                            	lineHeight: 33
+							},
+                        	per: {
+								color: '#eee',
+                            	backgroundColor: '#334455',
+                            	padding: [2, 4],
+                            	borderRadius: 2
+							}
+                    	}
+                	}
+            	},
+            	data:[
+					{value:123, name:'市容环卫'},
+                	{value:69, name:'环保水务'},
+                	{value:53, name:'市政设施'},
+                	{value:90, name:'其他'}
+            	]	
+        	},
+			{
+            	name:'超期结办-问题类型',
+            	type:'pie',
+            	radius: ['36%', '48%'],
+				animationType:'scale',
+				label: {
+                	normal: {
+                    	formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                    	backgroundColor: '#eee',
+                    	borderColor: '#aaa',
+                    	borderWidth: 1,
+                    	borderRadius: 4,
+                    	// shadowBlur:3,
+                    	// shadowOffsetX: 2,
+                    	// shadowOffsetY: 2,
+                    	// shadowColor: '#999',
+						// padding: [0, 7],
+                    	rich: {
+                        	a: {
+                            	color: '#999',
+                            	lineHeight: 22,
+                            	align: 'center'
+                        	},	
+                        	// abg: {
+                        	//     backgroundColor: '#333',
+                        	//     width: '100%',
+                        	//     align: 'right',
+							//     height: 22,
+                        	//     borderRadius: [4, 4, 0, 0]
+                        	// },
+                        	hr: {
+								borderColor: '#aaa',
+                            	width: '100%',
+                            	borderWidth: 0.5,
+                            	height: 0
+                        	},	
+							b: {
+                            	fontSize: 16,
+                            	lineHeight: 33
+							},
+                        	per: {
+								color: '#eee',
+                            	backgroundColor: '#334455',
+                            	padding: [2, 4],
+                            	borderRadius: 2
+							}
+                    	}
+                	}
+            	},
+            	data:[
+					{value:12, name:'市容环卫'},
+                	{value:9, name:'环保水务'},
+                	{value:5, name:'市政设施'},
+                	{value:19, name:'其他'}
+            	]	
+        	},
+			{
+            	name:'按期结办-问题类型',
+            	type:'pie',
+            	radius: ['36%', '48%'],
+				animationType:'scale',
+				label: {
+                	normal: {
+                    	formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                    	backgroundColor: '#eee',
+                    	borderColor: '#aaa',
+                    	borderWidth: 1,
+                    	borderRadius: 4,
+                    	// shadowBlur:3,
+                    	// shadowOffsetX: 2,
+                    	// shadowOffsetY: 2,
+                    	// shadowColor: '#999',
+						// padding: [0, 7],
+                    	rich: {
+                        	a: {
+                            	color: '#999',
+                            	lineHeight: 22,
+                            	align: 'center'
+                        	},	
+                        	// abg: {
+                        	//     backgroundColor: '#333',
+                        	//     width: '100%',
+                        	//     align: 'right',
+							//     height: 22,
+                        	//     borderRadius: [4, 4, 0, 0]
+                        	// },
+                        	hr: {
+								borderColor: '#aaa',
+                            	width: '100%',
+                            	borderWidth: 0.5,
+                            	height: 0
+                        	},	
+							b: {
+                            	fontSize: 16,
+                            	lineHeight: 33
+							},
+                        	per: {
+								color: '#eee',
+                            	backgroundColor: '#334455',
+                            	padding: [2, 4],
+                            	borderRadius: 2
+							}
+                    	}
+                	}
+            	},
+            	data:[
+					{value:213, name:'市容环卫'},
+                	{value:78, name:'环保水务'},
+                	{value:132, name:'市政设施'},
+                	{value:99, name:'其他'}
+            	]	
+        	},
+		]	
+		};
+		
+		
+		myChart.on('click', function (params){
+			if(params.componentType === 'series'){
+				if (params.seriesIndex === 0) {
+					if (params.dataIndex === 0) {
+						myChart.dispatchAction({
+    						type: 'legendSelect',
+    						// 图例名称
+    						name: '处置中-问题类型'
+							}			  
+						);	
+						myChart.dispatchAction({
+    						
+							type: 'legendUnSelect',
+							name: '超期结办-问题类型'
+							}			  
+						);	
+						myChart.dispatchAction({
+							type: 'legendUnSelect',
+							name: '按期结办-问题类型'
+							}				  
+						);	
+					}
+					else if(params.dataIndex === 1){
+						myChart.dispatchAction({
+    						type: 'legendUnSelect',
+    						// 图例名称
+    						name: '处置中-问题类型'
+							}			  
+						);	
+						myChart.dispatchAction({
+    						
+							type: 'legendSelect',
+							name: '超期结办-问题类型'
+							}			  
+						);	
+						myChart.dispatchAction({
+							type: 'legendUnSelect',
+							name: '按期结办-问题类型'
+							}				  
+						);	
+					}
+					else if(params.dataIndex === 2){
+						myChart.dispatchAction({
+    						type: 'legendUnSelect',
+    						// 图例名称
+    						name: '处置中-问题类型'
+							}			  
+						);	
+						myChart.dispatchAction({
+    						
+							type: 'legendUnSelect',
+							name: '超期结办-问题类型'
+							}			  
+						);	
+						myChart.dispatchAction({
+							type: 'legendSelect',
+							name: '按期结办-问题类型'
+							}				  
+						);	
+					}
+				}
+			}
+		});
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+	
+	<div class="date-stack" style="width: 250px;height:100px;">  <!-- yyn的第二个时间选择器-->	
+  		<p id="basicExample">
+    		<input type="text" name="input1" class="date start" value="2018-10-31" readonly/>
+    			to
+    		<input type="text" name="input2" class="date end" value="2018-10-31" readonly/>
+  		</p>
+  		<br>
+  		<button type="button"> 确认</button>
+	</div>
+       
+
+	<script>
+                $('#basicExample .date').datepicker({
+
+                    'format': 'yyyy-mm-dd',
+
+                    'autoclose': true
+
+                });
+
+                $('#basicExample').datepair();
+
+    </script>
+
+	<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div class="stack" id="main-stack" style="width: 480px;height:330px;"></div>   <!--yyn的第二个ECHARTS-->
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart_stack = echarts.init(document.getElementById('main-stack'));
+		
+	var option_stack = {
+    	title: {
+        	text: '各街道民生事件情况',
+			top: 'top',
+        	left: 'center'
+    	},
+    	tooltip : {
+        	trigger: 'axis',
+        	axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            	type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        	}
+    	},
+    	legend: {
+			//orient: 'vertical',
+			top:30,
+			//right: 'center',
+        	data:['市容城管','禽畜养殖污染','市政/公共设施','其他']
+    	},
+    	grid: {
+        	left: '%',
+        	right: '4%',
+        	bottom: '3%',
+        	containLabel: true
+    	},
+    	xAxis : [
+        	{
+            	type : 'category',
+            	data : ['A街道','B街道','C街道','D街道','E街道','F街道','G街道']
+        	}
+    	],
+    	yAxis : [
+        	{	
+            	type : 'value'
+        	}
+    	],
+		series : [
+        	{	
+            	name:'市容城管',
+            	type:'bar',
+            	barWidth : 30,
+            	stack: 'A',
+            	data:[620, 732, 701, 734, 1090, 1130, 1120]
+        	},
+        	{	
+            	name:'禽畜养殖污染',
+            	type:'bar',
+            	stack: 'A',
+            	data:[120, 132, 101, 134, 290, 230, 220]
+        	},
+        	{
+            	name:'市政/公共设施',
+            	type:'bar',
+            	stack: 'A',
+            	data:[60, 72, 71, 74, 190, 130, 110]
+        	},
+        	{
+            	name:'其他',
+            	type:'bar',
+            	stack: 'A',
+            	data:[62, 82, 91, 84, 109, 110, 120]
+        	}
+    	]
+	};
+		myChart_stack.setOption(option_stack);
+	</script>
+
+
+</body>
+</html>

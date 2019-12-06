@@ -3,6 +3,7 @@
 from django.db import models
 
 
+
 class Test(models.Model):
     name = models.CharField(max_length=20)
     test = models.IntegerField(default=0)
@@ -16,7 +17,12 @@ class Contact(models.Model):
     def __unicode__(self):
         return self.name
 
-
+class sysclock(models.Model):
+    
+    time =models.CharField(max_length=30)
+    #realtime=models.DateTimeField(auto_now=True,default=0)
+# class realclock(models.Model):
+#     realtime = models.DateTimeField(auto_now=True)
 class Tag(models.Model):
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE, )
     name = models.CharField(max_length=50)
@@ -57,3 +63,24 @@ class user1(models.Model):
     username=models.CharField(max_length=200)
     userkeyword=models.CharField(max_length=200)
     userdepart=models.CharField(max_length=200)
+
+class Comment(models.Model):
+    #user = models.CharField(max_length=64)
+    #date = models.DateField()
+    star = models.IntegerField(default=0)
+
+    reason_1 = models.TextField(default=False)
+    reason_2 = models.TextField(default=False)
+    reason_3 = models.TextField(default=False)
+    reason_4 = models.TextField(default=False)
+    reason_5 = models.TextField(default=False)
+    reason_6 = models.TextField(default=False)
+
+    context = models.TextField()
+
+class Staff(models.Model):
+    staff_id = models.CharField(max_length=128)
+    staff_verification = models.CharField(max_length=128)
+    staff_username = models.CharField(max_length=128)
+    staff_already_exist = models.CharField(max_length=128,default='no')
+

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html >
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <title>坪山区政府大数据系统</title>
+
+  <!--外部CSS-->
+
+  <link href="../static/css/demo.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="../static/css/jqbar.css"/>
+  <link rel="stylesheet" type="text/css" href="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.css" />
+  <link rel="stylesheet" type="text/css" href="../static/css/bootstrap-datepicker.css" />
+  <link rel="stylesheet" type="text/css" href="../static/css/pikaday.css" />
+  <link rel="stylesheet" type="text/css" href="../static/css/jquery.ptTimeSelect.css" />
+  <link rel="stylesheet" type="text/css" href="../static/css/site.css" />
+      <link rel="stylesheet" type="text/css" href="../static/css/zadeyansghi.css">
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=oA81tgVZ7pYsejwFKu16o8dZaqU9VuGd"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+  <script src="http://www.jq22.com/jquery/jquery-1.9.1.js"></script>
+
+
+  <!--下面是文件引用，上面是url引用-->
+  <script src="../static/js/cebianlan_yuanshi.js"></script>
+  <script type="text/javascript" src="../static/js/echarts.min.js"></script>
+
+  <script src="../static/js/pikaday.js"></script>
+
+  <script src="../static/js/moment.min.js"></script>
+  <script src="../static/js/site.js"></script>
+
+
+  <!--alarm----------------->
+  <link rel="stylesheet" href="../static/css/style_cebianlan.css">
+  <link href="../static/css/ticker-style.css" rel="stylesheet" type="text/css" />
+  <script src="http://www.jq22.com/jquery/1.6.4/jquery.min.js"></script>
+  <script type="text/javascript">
+    var $164 = $;
+  </script>
+  <script src="../static/js/jquery.ticker.js" type="text/javascript"></script>
+  <script src="../static/js/site_alarm.js" type="text/javascript"></script>
+  <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+
+  <script type="text/javascript">
+    var $102 = $;
+  </script>
+  <script src="../static/js/index_alarm.js"></script>
+  <!--<script src="js/jquery.min.js"></script>-->
+  <script src="../static/js/jquery.nicescroll.min.js"></script>
+
+      <script src="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.js"></script>
+      <script type="text/javascript">
+    //   var $106 = $;
+  </script>
+      <script src="../static/js/jquery.ptTimeSelect.js"></script>
+      <script src="../static/js/bootstrap-datepicker.js"></script>
+      <script src="../static/js/jquery.datepair.js"></script>
+
+  </head>
+
+  <!--内部CSS-->
+
+
+  <body>
+
+<!--各个DIV集合，主体部分----------> 
+
+<!--把DIV在JS调用前声明！！！！--------------------->
+
+<div class="whole_page">
+    <div id="news_div" style="z-index:100;position:fixed; left:18%;overflow: hidden;">
+    <ul id="js-news" class="js-hidden" >
+<!--        {% for a in alarm_List %}-->
+<!--            <li class="news-item">{{ a }}</li>-->
+<!--        {% endfor %}-->
+            <li><span class="alarm1">                         </span></li>
+            <li><span class="alarm2">                         </span></li>
+            <li><span class="alarm3">                         </span></li>
+            <li><span class="alarm4">                         </span></li>
+            <li><span class="alarm5">                         </span></li>
+            <li><span class="alarm6">                         </span></li>
+            <li><span class="alarm7">                         </span></li>
+            <li><span class="alarm8">                         </span></li>
+            <!-- <li id="alarm2">2</li>
+            <li id="alarm3">3</li>
+            <li id="alarm4">4</li>
+            <li id="alarm5">5</li>
+            <li id="alarm6">6</li>
+            <li id="alarm7">7</li>
+            <li id="alarm8">8</li> -->
+      </ul>
+  </div>
+    <div class="page_box" id="hwc_page1">
+    <div id="zhuzhuangtu_container">
+        <div id="zhuzhuangtu"  class="zhuzhuangtu_hwc"></div>
+        <div class=page_title id="title_page1">热 点 社 区</div>
+    </div>
+    <div id="menu">
+        <div class="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+        <div class="menu-inner">
+        <ul id="options_table">
+            <li>姓名：{{username}}</li>
+            <li></li>
+            <li class="menu_item1" onmouseover="function a(){
+		alert(1)}"><img src="../static/img/redian_tubiao.png" style="height:29px;position:relative;top:6px;">热点社区</li>
+            <li class="menu_item2"><img src="../static/img/binzhuang_tubiao.png" style="height: 29px;position: relative;top:6px;">民生分析</li>
+            <li class="menu_item3"><img src="../static/img/zhexian_tubiao.png" style="height: 29px;position: relative;top:6px;">工作情况</li>
+            <li ><a href="pingjia"><img src="../static/img/yijian1.png" style="height: 29px;position: relative;top:10px;">意见和建议</a></li>
+            <li style="position:relative; left:15%";>
+                <form method="post" name="logout">
+              {% csrf_token %}
+              <input id="tuichu_bin" style="font-size:16px;font-family:微软雅黑;border:0px;width:100px;color:white; background-color:#26394e" type="submit" class="btn" name="logout_submit" value="退出登录" />
+            </form>
+            </li>
+        </ul>
+      </div>
+        <svg version="1.1" id="blob" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path id="blob-path" d="M60,500H0V0h60c0,0,20,172,20,250S60,900,60,500z"/>
+      </svg>
+      </div>
+    <div id="container_relitu_hwc"></div>
+    <div id="r-result" style="display:none">
+        <input type="button"  οnclick="openHeatmap();" value="显示热力图"/>
+        <input type="button"  οnclick="closeHeatmap();" value="关闭热力图"/>
+      </div>
+    <article> <!--日期选择模块 hwc-->
+        <div class="date_hwc">
+        <form  method="post" name="rlt">
+        {% csrf_token %}
+        <p id="basicExample_hwc">
+        <input type="text" name="begin_rlt" id="begin_rlt" class="date start" value={{moren}} readonly />
+        to
+         <input type="text" name="end_rlt" id="end_rlt" class="date end" value={{moren}} readonly/>
+        </p>
+        <br>
+        <input name="rlt_submit" id="rlt_submit" type="submit" value="确认">
+            <!--<botton id="rlt_submit">确认</botton>-->
+        </form>
+      </div>
+      </article>
+  </div>
+    
+    <!--	yyn div模块-->
+    <div class="page_box" id="yyn_page2">
+    <section id="examples">
+        <article>
+        <div class="demo-yyn"> <!-- yyn的第一个时间选择器-->
+            <p>选择日期</p>
+            <form  method="get" name="sjjb">
+            {% csrf_token %}
+            <p id="basicExample_yyn1">
+                 <input type="text" name="begin_sjjb" id="begin_sjjb" class="date start" value={{moren}} readonly />
+                <!--<input type="text" name="begin_sjjb" class="date start" value="10/30/2018" readonly />-->
+                 to
+                 <input type="text" name="end_sjjb" id="end_sjjb" class="date end" value={{moren}} readonly/>
+                 </p>
+                 <br>
+                <!--<input id="sjjb_submit"  type="submit" value="确认">-->
+                <input name="sjjb_submit" id="sjjb_submit"  type="submit" value="确认">
+                <!--<botton id="sjjb_submit">确认</botton>-->
+            </form>
+          </div>
+        <div class="date-stack"> <!-- yyn的第二个时间选择器-->
+            <form  method="get" name="gjdm">
+            {% csrf_token %}
+            <p id="basicExample_yyn2">
+                 <input type="text" name="begin_gjdm" id="begin_gjdm" class="date start" value={{moren}} readonly />
+                 to
+                 <input type="text" name="end_gjdm" id="end_gjdm" class="date end" value={{moren}} readonly/>
+                 </p>
+                 <br>
+                <input name="gjdm_submit" id="gjdm_submit"  type="submit" value="确认">
+                <!--<botton id="gjdm_submit">确认</botton>-->
+            </form>
+          </div>
+        <div id="main-yyn"></div>
+        <!--yyn的第一个ECHARTS-->
+        <div id = 'stack_container'>
+          <div class=page_title id="title_page2">民 生 事 件</div>
+          <!--yyn的第二个ECHARTS-->
+          <div class="stack" id="main-stack"></div>
+        </div>
+
+        
+      </article>
+      </section>
+    </div>
+    <div class="page_box" id="page3">
+        <div id="zhexiantu"></div>
+        <div id="box"> <!--滚动未结办-->
+        <marquee id="boxs" align="left" behavior="scroll" direction="up" bgcolor= "white" height="100%" width="100%" hspace="0" vspace="0" loop="-1" scrollamount="5" scrolldelay="100" onmouseout="this.start()" onmouseover="this.stop()">
+         <!--<ul id="list1"></ul>-->
+         <div class="wrapper">
+				<span > &ensp;未结办: 在北京时间</span> <!--传进去！的社区 类型等等！在这里-->
+		 		<span id="time1"></span>
+				<span id="street1"></span>
+				<span >发生了</span>
+				<span id="type1">环保水务</span>
+			    <span >的</span>
+				<span style="background-color:cornflowerblue;">投诉</span>
+                <br>
+                <br>
+
+                <span > &ensp;未结办: 在北京时间</span>
+		 		<span id="time2">19点59分</span>
+				<span id="street2"></span>
+				<span >发生了</span>
+				<span id="type2">环保水务</span>
+			    <span >的</span>
+				<span style="background-color:cornflowerblue;">投诉</span>
+                <br>
+                <br>
+
+                <span > &ensp;未结办: 在北京时间</span>
+		 		<span id="time3">20点21分</span>
+				<span id="street3">碧岭街道</span>
+				<span >发生了</span>
+				<span id="type3">市容环卫</span>
+			    <span >的</span>
+				<span style="background-color:cornflowerblue;">投诉</span>
+                <br>
+                <br>
+
+                <span > &ensp;未结办: 在北京时间</span>
+		 		<span id="time4">20点21分</span>
+				<span id="street4">碧岭街道</span>
+				<span >发生了</span>
+				<span id="type4">市容环卫</span>
+			    <span >的</span>
+				<span style="background-color:cornflowerblue;">投诉</span>
+                <br>
+                <br>
+
+                <span > &ensp;未结办: 在北京时间</span>
+		 		<span id="time5">20点21分</span>
+				<span id="street5">碧岭街道</span>
+				<span >发生了</span>
+				<span id="type5">市容环卫</span>
+			    <span >的</span>
+				<span style="background-color:cornflowerblue;">投诉</span>
+                <br>
+                <br>
+
+                <span > &ensp;未结办: 在北京时间</span>
+		 		<span id="time6">20点21分</span>
+				<span id="street6">碧岭街道</span>
+				<span >发生了</span>
+				<span id="type6">市容环卫</span>
+			    <span >的</span>
+				<span style="background-color:cornflowerblue;">投诉</span>
+                <br>
+                <br>
+
+             <span > &ensp;未结办: 在北京时间</span>
+		 		<span id="time7">20点21分</span>
+				<span id="street7">碧岭街道</span>
+				<span >发生了</span>
+				<span id="type7">市容环卫</span>
+			    <span >的</span>
+				<span style="background-color:cornflowerblue;">投诉</span>
+                <br>
+                <br>
+
+             <span > &ensp;未结办: 在北京时间</span>
+		 		<span id="time8">20点21分</span>
+				<span id="street8">碧岭街道</span>
+				<span >发生了</span>
+				<span id="type8">市容环卫</span>
+			    <span >的</span>
+				<span style="background-color:cornflowerblue;">投诉</span>
+                <br>
+                <br>
+
+             <span > &ensp;未结办: 在北京时间</span>
+		 		<span id="time9">20点21分</span>
+				<span id="street9">碧岭街道</span>
+				<span >发生了</span>
+				<span id="type9">市容环卫</span>
+			    <span >的</span>
+				<span style="background-color:cornflowerblue;">投诉</span>
+                <br>
+                <br>
+
+             <span > &ensp;未结办: 在北京时间</span>
+		 		<span id="time10">20点21分</span>
+				<span id="street10">碧岭街道</span>
+				<span >发生了</span>
+				<span id="type10">市容环卫</span>
+			    <span >的</span>
+				<span style="background-color:cornflowerblue;">投诉</span>
+                <br>
+                <br>
+
+             <span > &ensp;未结办: 在北京时间</span>
+		 		<span id="time11">20点21分</span>
+				<span id="street11">碧岭街道</span>
+				<span >发生了</span>
+				<span id="type11">市容环卫</span>
+			    <span >的</span>
+				<span style="background-color:cornflowerblue;">投诉</span>
+                <br>
+                <br>
+
+             <span > &ensp;未结办: 在北京时间</span>
+		 		<span id="time12">20点21分</span>
+				<span id="street12">碧岭街道</span>
+				<span >发生了</span>
+				<span id="type12">市容环卫</span>
+			    <span >的</span>
+				<span style="background-color:cornflowerblue;">投诉</span>
+                <br>
+                <br>
+		    <!--<ul id="list2"></ul>-->
+      </div>
+      </marquee>
+        </div>
+	  
+		
+    <div id="minshengfenxi"></div>
+    <!--民生分析未结办-->
+    
+    <div class="demo-yyn3">  <!--yyn的第三个时间选择器-->
+        <p>选择日期</p>
+        <form  method="get" name="msfx">
+        {% csrf_token %}
+        <p id="basicExample_yyn3">
+        <input type="text" name="begin_msfx" id="begin_msfx" class="date start" value={{moren}} readonly />
+        to
+         <input type="text" name="end_msfx" id="end_msfx" class="date end" value={{moren}} readonly/>
+        </p>
+        <br>
+        <input name="msfx_submit" id="msfx_submit" type="submit" value="确认">
+            <!--<botton id="msfx_submit">确认</botton>-->
+        </form>
+      </div>
+  </div>
+
+</div>
+
+	<!--yyn div模块--------------------------END>-->
+<script>
+    $(function () {
+        //获取不同page到顶部的距离 
+        var page1_height = $('#hwc_page1').offset().top;
+        var page2_height = $('#yyn_page2').offset().top;
+        var page3_height = $('#page3').offset().top;
+        $('.menu_item1').click(function () {
+            $('html,body').animate({scrollTop:page1_height},500);
+        })
+        $('.menu_item2').click(function () {
+            $('html,body').animate({scrollTop:page2_height},500);
+        })
+        $('.menu_item3').click(function () {
+            $('html,body').animate({scrollTop:page3_height},500);
+        })
+    })
+</script>
+<script>
+var List_rlt = {{ rlt_List|safe }};
+var List_six = {{ six_List|safe }};
+var List_zx = {{ zx_List|safe }};
+var List_msfx = {{ msfx_List|safe }};
+var List_gjdm = {{ gjdm_List|safe }};
+var List_sjjb = {{ sjjb_List|safe }};
+</script>
+
+<script type="text/javascript" src="../static/js/page_height.js"></script>
+<script type="text/javascript" src="../static/js/minshengfenxi.js"></script>
+<script type="text/javascript" src="../static/js/shijianjiebanfenxi.js"></script>
+<script type="text/javascript" src="../static/js/shijianxuanzeqi.js"></script>
+<!-- <script type="text/javascript" src="../static/js/create_relitu.js"></script> 热力图并入了qian6jian-->
+<script type="text/javascript" src="../static/js/gejiedaominjianshijian.js"></script>
+
+<script type="text/javascript" src="../static/js/qian6jian.js"></script>
+<script type="text/javascript" src="../static/js/zhexiantu.js"></script>
+<script type="text/javascript" src="../static/js/gundongping.js"></script>
+</body>
+
+</html>
+
+<!--<script>
+
+
+</script>-->
+
+
+
+
+

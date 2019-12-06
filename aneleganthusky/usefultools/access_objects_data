@@ -1,6 +1,0 @@
-from pingshan.models import Appeal
-
-appeal = Appeal.objects.filter(EVENT_SRC_NAME__startswith='12345')
-fields = [f.name for f in Appeal._meta.get_fields()]
-for field in fields:
-    value = getattr(appeal, field)
